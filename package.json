@@ -1,0 +1,28 @@
+{
+  "name": "whipp_honsVR",
+  "version": "1.0.0",
+  "description": "VR project for the web using a-frame component entry system.",
+  "repository": {
+    "type": "git",
+    "url": "?.git"
+  },
+  "author": "Stephen Whipp",
+  "devDependencies": {
+    "aframe": "^0.5.0",
+    "aframe-extras": "^3.3.4",
+    "aframe-gradient-sky": "^1.0.4",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-compass": "^2.1.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-jshint": "^2.0.4",
+    "gulp-uglify": "^2.1.0",
+    "gulp-util": "^3.0.8",
+    "jquery": "^3.2.0",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1"
+  }
+}
