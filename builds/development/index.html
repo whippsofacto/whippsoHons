@@ -22,7 +22,7 @@
         <a-asset-item id="lighthouse-mtl" src="./assets/models/lighthouse0.5.mtl"></a-asset-item>
       </a-assets>
       <!-- test area -->
-
+      <a-box id="testBox" depth="2" height="4" width="0.5" position="0 0 -4.77" rotation="0 90 0"></a-box>
        <a-box log="Hello, Box!"></a-box>
 
       <!-- Models added to scene-->
@@ -36,7 +36,10 @@
                 kinematic-body>
 
       <!-- CURSOR -->
-      <a-entity cursor
+      <a-entity
+              id="cursor"
+              log = "Hello from the cursor"
+              cursor
               position="0 0 -1"
               geometry="primitive: ring; radiusInner: 0.016; radiusOuter: 0.02;"
               material="color: #CCC; shader: flat;">

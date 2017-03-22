@@ -9,6 +9,7 @@
   "author": "Stephen Whipp",
   "devDependencies": {
     "aframe": "^0.5.0",
+    "aframe-event-set-component": "^3.0.2",
     "aframe-extras": "^3.3.4",
     "aframe-gradient-sky": "^1.0.4",
     "gulp": "^3.9.1",
