@@ -6,24 +6,26 @@ var aframe = require ('aframe');
 var extras = require('aframe-extras');
 //gradient-sky
 var gradientSky = require('aframe-gradient-sky');
-//event set-image
+//event-set
 var eventSet = require('aframe-event-set-component');
-
-
-console.log("hello world");
+//aframe animation
+var animation = require('aframe-animation-component');
 //register the use of the extras
 extras.registerAll();
 
-AFRAME.registerComponent('log', {
+//----------- Test components -----------//
+console.log("hello world");
+// log component --for testing
+/*AFRAME.registerComponent('log', {
   schema: {type: 'string'},
 	init: function () {
     var stringToLog = this.data;
     console.log(stringToLog);
-
 		var title = $( "#testBox" )
 		.attr({
 			color:"blue",
 			position: "0 0 -9"
-		});
+		})
+    console.log(title)
   }
-});
+});*/

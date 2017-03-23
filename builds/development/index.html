@@ -20,17 +20,20 @@
         <a-asset-item id="lighthouse-obj" src="./assets/models/lighthouse0.5.obj"></a-asset-item>
         <a-asset-item id="lighthouse-mtl" src="./assets/models/lighthouse0.5.mtl"></a-asset-item>
         <!-- events -->
-        <a-mixin id="clickEvent" event-set__1="_event: click; material.color: red; scale: 2 2 2"></a-mixin>
-        <a-mixin id="mouseEnter" event-set__2="_event: mouseenter; material.color: blue; scale: 0 0 0"></a-mixin>
+        <a-mixin id="clickEvent" event-set__1="_event: click; material.color: red;"></a-mixin>
+        <a-mixin id="mouseEnter" event-set__2="_event: mouseenter; material.color: blue; scale: 1 1 1ad"></a-mixin>
+        <!-- Script -->
+        <!-- Image link template to be reused. -->
       </a-assets>
       <!-- test area -->
-      <a-box id="testBox" depth="2" height="4" width="0.5" position="0 0 -4.77" rotation="0 90 0"></a-box>
-       <a-box log="Hello, Box!"></a-box>
-       <a-box color="green"
-        mixin="clickEvent"
-         position=" 0 2.48 -5.10">
-       </a-box>
+      <a-box id="testBox"
+             position="2.0 1.26 -4.7"
+             rotation="0 90 0"
+             event-set__1="_event: click; material.color: red; scale: 0.0 0 0.0; _target: #myBox"
+             event-set__2="_event: mouseenter; scale: 1 1 1; _target: #myBox"></a-box>
 
+       <a-box id="myBox" position=" -2.0 1.26 -4.7">
+        </a-box>
 
       <!-- Models added to scene-->
       <a-entity obj-model="obj: #lighthouse-obj; mtl: #lighthouse-mtl" position="-0.33 0.5 -43.37" ></a-entity>
@@ -41,11 +44,9 @@
                                      movementEnabled: true"
                 checkpoint-controls="mode: animate; animateSpeed:4.5"
                 kinematic-body>
-
       <!-- CURSOR -->
       <a-entity
               id="cursor"
-              log = "Hello from the cursor"
               cursor
               position="0 0 -1"
               geometry="primitive: ring; radiusInner: 0.016; radiusOuter: 0.02;"
