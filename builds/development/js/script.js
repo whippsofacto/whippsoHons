@@ -14,22 +14,45 @@ var animation = require('aframe-animation-component');
 //register the use of the extras
 extras.registerAll();
 
-//----------- Test components -----------//
-console.log("hello world");
-// log component --for testing
-/*AFRAME.registerComponent('log', {
-  schema: {type: 'string'},
-	init: function () {
-    var stringToLog = this.data;
-    console.log(stringToLog);
-		var title = $( "#testBox" )
-		.attr({
-			color:"blue",
-			position: "0 0 -9"
-		})
-    console.log(title)
+
+//*------ Components -----*//
+AFRAME.registerComponent('foo', {
+  init: function () {
+
+    console.log(this.el.sceneEl);  // Reference to the scene element.
+    var testBox = this.el.sceneEl.querySelector('#testBox');
+    var myBox = this.el.sceneEl.querySelector('#myBox');
+    var myBox1 = this.el.sceneEl.querySelector('#myBox1');
+    var myBox2 = this.el.sceneEl.querySelector('#myBox2');
+
+    /*
+    console.log (testBox);
+    testBox.onclick = function(){
+      myBox.setAttribute('material', 'color', 'orange');
+      myBox.setAttribute('class', 'test');
+      myBox1.setAttribute('material', 'color', 'green');
+      myBox2.setAttribute('material', 'color', 'red');
+    }
+    */
+
+    $('#testBox').click(function() {
+    if ($('#myBox').hasClass('test')) {
+        $('#myBox').attr('scale',"0 0 0");
+        $('#myBox').removeClass('test');
+    } else {
+      ($('#myBox').attr('scale',"1 1 1"));
+      ($('#myBox').addClass('test'));
+    }
+});
+
+
+
+
+
+
+
   }
-});*/
+});
 
 },{"aframe":51,"aframe-animation-component":2,"aframe-event-set-component":3,"aframe-extras":4,"aframe-gradient-sky":39,"jquery":110}],2:[function(require,module,exports){
 /* global AFRAME */
