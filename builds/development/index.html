@@ -26,12 +26,23 @@
         <!-- Image link template to be reused. -->
       </a-assets>
       <!-- test area -->
-      <a-box id="testBox"
+      <a-entity id="testBox"
+             geometry="primative: box"
              position="2.0 1.26 -4.7"
-             rotation="0 90 0"></a-box>
-       <a-box id="myBox" position=" -2.0 1.26 -4.7" scale="1 1 1"></a-box>
-       <a-box id="myBox1" position=" 0.0 1.26 -4.7"></a-box>
-       <a-box id="myBox2" position=" -4.0 1.26 -4.7"></a-box>
+             rotation="0 90 0"
+       </a-entity>
+       <a-entity id="myBox"
+              geometry="primative: box"
+              position=" -2.0 1.26 -4.7"
+              scale="1 1 1"></a-entity>
+       <a-entity id="myBox1"
+              geometry="primative: box"
+              position=" 0.0 1.26 -4.7">
+            </a-entity>
+       <a-entity id="myBox2"
+              geometry="primative: box"
+              position=" -4.0 1.26 -4.7">
+            </a-entity>
 
 
       <!-- Models added to scene-->
