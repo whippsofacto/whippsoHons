@@ -9,7 +9,7 @@
 </head>
 <body>
   <!-- fog="type: exponential; color: #8CC8FA; density: 0.06;" -->
-  <a-scene foo fog="type: exponential; color: #8CC8FA; density: 0.06;" stats>
+  <a-scene foo fog="type: exponential; color: #8CC8FA; density: 0.06;">
       <!--- ASSETS -->
       <a-assets>
         <audio id="seaside" src="./assets/seaside.mp3" preload="auto"></audio>
@@ -20,6 +20,9 @@
         <a-asset-item id="lighthouse-obj" src="./assets/models/lighthouse0.5.obj"></a-asset-item>
         <a-asset-item id="lighthouse-mtl" src="./assets/models/lighthouse0.5.mtl"></a-asset-item>
         <a-asset-item id="stairs-obj" src="./assets/models/stairs0.2.obj"></a-asset-item>
+        <a-asset-item id="speech-obj" src="./assets/models/speechBubbl.obj"></a-asset-item>
+        <a-asset-item id="speech-mtl" src="./assets/models/speechBubbl.mtl"></a-asset-item>
+
         <!--Checkpoints-->
         <a-entity geometry="cylander" checkpoint="offset: 0 1.6 0" radius="0.8" height="0.06" color="#A6447D"></a-entity>
         <!-- Script -->
@@ -48,6 +51,9 @@
       <!-- Models added to scene-->
       <a-entity static-body id="testBox"  obj-model="obj: #lighthouse-obj; mtl: #lighthouse-mtl" position="-0.33 0.5 -43.37" ></a-entity>
       <a-entity static-body  obj-model="obj: #stairs-obj;" rotation = "0  -100 0 "position="-1.04 0 -43.48"></a-entity>
+  <!--    <a-entity static-body visible="false" obj-model="obj: #speech-obj; mtl: #speech-mtl" position="-1.36 2.49 -2.37" scale="0.3 0.3 0.3" rotation=" 90 0 0" ></a-entity>-->
+
+
 
       <!-- Camera/Player -->
       <a-entity camera="userHeight: 1.6"
