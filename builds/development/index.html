@@ -26,10 +26,10 @@
         <!-- Image link template to be reused. -->
       </a-assets>
       <!-- test area -->
-      <a-entity id="testBox"
+      <a-entity
              geometry="primative: box"
              position="2.0 1.26 -4.7"
-             rotation="0 90 0"
+             rotation="0 90 0">
        </a-entity>
        <a-entity id="myBox"
               geometry="primative: box"
@@ -46,7 +46,7 @@
 
 
       <!-- Models added to scene-->
-      <a-entity static-body  obj-model="obj: #lighthouse-obj; mtl: #lighthouse-mtl" position="-0.33 0.5 -43.37" ></a-entity>
+      <a-entity static-body id="testBox"  obj-model="obj: #lighthouse-obj; mtl: #lighthouse-mtl" position="-0.33 0.5 -43.37" ></a-entity>
       <a-entity static-body  obj-model="obj: #stairs-obj;" rotation = "0  -100 0 "position="-1.04 0 -43.48"></a-entity>
 
       <!-- Camera/Player -->
