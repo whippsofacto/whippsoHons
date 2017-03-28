@@ -9,7 +9,7 @@
 </head>
 <body>
   <!-- fog="type: exponential; color: #8CC8FA; density: 0.06;" -->
-  <a-scene foo>
+  <a-scene foo fog="type: exponential; color: #8CC8FA; density: 0.01;">
       <!--- ASSETS -->
       <a-assets>
         <audio id="seaside" src="./assets/seaside.mp3" preload="auto"></audio>
@@ -23,6 +23,14 @@
         <a-asset-item id="speech-mtl" src="./assets/models/speechBubbl.mtl"></a-asset-item>
         <a-asset-item id="sign-obj" src="./assets/models/newSign.0.1.obj"></a-asset-item>
         <a-asset-item id="sign-mtl" src="./assets/models/newSign.0.1.mtl"></a-asset-item>
+        <a-asset-item id="grass-obj" src="./assets/models/grass.obj"></a-asset-item>
+        <a-asset-item id="grass-mtl" src="./assets/models/grass.mtl"></a-asset-item>
+        <!-- Dialogue -->
+        <a-asset-item id="intro_1-obj" src="./assets/models/textObj/intro_1.3.obj"></a-asset-item>
+        <a-asset-item id="intro_1-mtl" src="./assets/models/textObj/intro_1.3.mtl"></a-asset-item>
+        <a-asset-item id="lightsOnText-obj" src="./assets/models/textObj/lightsOn.obj"></a-asset-item>
+        <a-asset-item id="lightsOnText-mtl" src="./assets/models/textObj/lightsOn.mtl"></a-asset-item>
+
 
         <!--Checkpoints-->
         <a-entity geometry="cylander" checkpoint="offset: 0 1.6 0" radius="0.8" height="0.06" color="#A6447D"></a-entity>
@@ -49,19 +57,25 @@
              geometry="primative: box"
              material="color: yellow"
              position=" 10.83 2 0.41"
-             scale="1 1 1">
+             scale="0 0 0"
+             animation__scale="property: scale; dir: normal; dur: 18000; easing: easeInSine; loop: false; to: 1 1 1">
              <a-entity id="spotBox"
                        light="color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot"
                        position ="-3.02 -0.03 -0.12"
                        rotation="35.58 -87.94 0"
-                       animation__lightsUp= "property: light.intensity; dir: normal; dur: 10000; easing: easeInSine; loop: false; from: 0; to: 0.88">
-                   </a-entity>
+                       animation__lightsUp= "property: light.intensity; dir: normal; dur: 18000; easing: easeInSine; loop: false; from: 0; to: 0.88"
+                       >
            </a-entity>
+      </a-entity>
 
 
       <!-- Models added to scene-->
       <a-entity static-body id="testBox"  obj-model="obj: #lighthouse-obj; mtl: #lighthouse-mtl" position="-0.33 0.5 -43.37" ></a-entity>
       <a-entity static-body id="signPost"  obj-model="obj: #sign-obj; mtl: #sign-mtl" rotation="90 43 90" scale="0.3 0.3 0.3" position="3.46 0.96 -1.95" ></a-entity>
+      <a-entity static-body id="grassBulb"  obj-model="obj: #grass-obj; mtl: #grass-mtl" scale="0.5 0.5 0.5" position="3.18 0.41 -0.21" ></a-entity>
+
+      <!-- Dialogue -->
+
 
   <!--    <a-entity static-body visible="false" obj-model="obj: #speech-obj; mtl: #speech-mtl" position="-1.36 2.49 -2.37" scale="0.3 0.3 0.3" rotation=" 90 0 0" ></a-entity>-->
 
@@ -104,7 +118,7 @@
       <!--<a-entity light="type: hemisphere; color: #AAA; groundColor: #000000; intensity: 0.9;"></a-entity>-->
       <!--<a-entity light="type: ambient; color: #DC8874; intensity: 0.5;"></a-entity>-->
       <!--<a-entity id="ambient" light="type: ambient; color: #BBB"></a-entity>-->
-      <a-entity id="spot" light="decay: -50; intensity: 0.1; penumbra: 0.16; type: spot" position ="0 4.9 0"rotation="-90 0 0"></a-entity>
+      <!--<a-entity id="spot" light="decay: -50; intensity: 0.1; penumbra: 0.16; type: spot" position ="0 4.9 0"rotation="-90 0 0"></a-entity>-->
 
 
 

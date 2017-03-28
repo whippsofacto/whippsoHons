@@ -22,11 +22,48 @@ AFRAME.registerComponent('foo', {
     //Variables ---------------------------- //
     var scene = $('a-scene');
     var entity = $(document.createElement('a-entity'));
-    var yesBtn = $(document.createElement('a-plane'));
-    var noBtn = $(document.createElement('a-plane'));
+    var box = $(document.createElement('a-entity'));
+    var light = $(document.createElement('a-entity'));
+    var nestedEntity = $(document.createElement('a-entity'));
+
+    //var yesBtn = $(document.createElement('a-plane'));
+    //var noBtn = $(document.createElement('a-plane'));
 
 
- 
+    // Text Vars ---------------------------------------//
+    var intro1 = $("#intro1");
+
+
+    //--- Intro ----------------------------------------//
+
+
+
+    setTimeout(function () {
+        scene.append(entity);
+        entity.attr({  id:"intro1",
+                       "obj-model":"obj: #intro_1-obj; mtl: #intro_1-mtl",
+                       scale:"0.6 0.6 0.6",
+                       position:"-2.3 2.26 -5.20",
+                       rotation:"90 0 0",
+                       animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
+    }, 200);
+
+    setTimeout(function(){
+      scene.append(entity);
+      entity.attr({  id:"lightsOnIntro",
+                     "obj-model":"obj: #lightsOnText-obj; mtl: #lightsOnText-mtl",
+                     scale:"0.6 0.6 0.6",
+                     position:"0.2 2.26 -3.20",
+                     rotation:"90 0 0"});
+   },9000);
+
+
+
+
+
+
+
+
 
 
     /*
