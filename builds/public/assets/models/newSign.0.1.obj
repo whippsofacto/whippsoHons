@@ -1,6 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'newSign.blend'
 # www.blender.org
-mtllib newSign.mtl
+mtllib newSign.0.1.mtl
 o Text
 v -0.101232 0.171710 -1.327130
 v -0.101191 0.171710 -1.316298
