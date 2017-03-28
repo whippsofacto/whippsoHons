@@ -15,6 +15,7 @@ var animation = require('aframe-animation-component');
 extras.registerAll();
 
 
+
 //*------ Components -----*//
 AFRAME.registerComponent('foo', {
   init: function () {
@@ -89,7 +90,7 @@ AFRAME.registerComponent('foo', {
                       $(noBtn).remove();
                       alert("removed");
                     },300);
-        });    
+        });
     });
 
 
