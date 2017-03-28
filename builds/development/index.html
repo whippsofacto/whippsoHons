@@ -45,13 +45,17 @@
               geometry="primative: box"
               position=" -4.0 1.26 -4.7">
             </a-entity>-->
-
-      <a-entity id="myBox"
+      <a-entity id="lightBox"
              geometry="primative: box"
              material="color: yellow"
              position=" 10.83 2 0.41"
              scale="1 1 1">
-             <a-entity id="spotBox" light="color: #9ef6ff; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot" position ="-3.02 0.45 1.98"rotation="0 -80 0"></a-entity>
+             <a-entity id="spotBox"
+                       light="color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot"
+                       position ="-3.02 -0.03 -0.12"
+                       rotation="35.58 -87.94 0"
+                       animation__lightsUp= "property: light.intensity; dir: normal; dur: 10000; easing: easeInSine; loop: false; from: 0; to: 0.88">
+                   </a-entity>
            </a-entity>
 
 

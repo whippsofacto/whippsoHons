@@ -24,7 +24,7 @@ AFRAME.registerComponent('foo', {
     var entity = $(document.createElement('a-entity'));
     var yesBtn = $(document.createElement('a-plane'));
     var noBtn = $(document.createElement('a-plane'));
-
+    /*
     //--- Animations Testing ---//
     $('#testBox').click(function() {
     if ($('#myBox').hasClass('test')) {
@@ -92,7 +92,7 @@ AFRAME.registerComponent('foo', {
         });
     });
 
-
+*/
 
 
 
