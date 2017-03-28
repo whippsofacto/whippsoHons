@@ -24,15 +24,15 @@ AFRAME.registerComponent('foo', {
     var scene = $('a-scene');
     var entity = $(document.createElement('a-entity'));
     var box = $(document.createElement('a-entity'));
+    var movingBox = $(document.createElement('a-entity'));
+    var movingLight = $(document.createElement('a-entity'));
+    var hoverBox = $(document.createElement('a-entity'));
+    var hoverLight = $(document.createElement('a-entity'));
     var light = $(document.createElement('a-entity'));
     var nestedEntity = $(document.createElement('a-entity'));
 
     //var yesBtn = $(document.createElement('a-plane'));
     //var noBtn = $(document.createElement('a-plane'));
-
-
-    // Text Vars ---------------------------------------//
-    var intro1 = $("#intro1");
 
 
     //--- Intro ----------------------------------------//
@@ -57,6 +57,53 @@ AFRAME.registerComponent('foo', {
                      position:"0.2 2.26 -3.20",
                      rotation:"90 0 0"});
    },9000);
+
+   $('#lightBox').one("click",function() {
+     console.log("ello box");
+     scene.append(movingBox);
+     movingBox.attr({
+                  id:"movingBox",
+                  geometry:"primative: box",
+                  position:" 3.91 2 10.33",
+                  scale:"0 0 0",
+                  animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
+                  //animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.49 2 10.33"
+            });
+     movingBox.append(movingLight);
+     movingLight.attr({
+       light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+       position:"-0.59 -0.03 -4.04",
+       rotation:"35.58 -178.19 0",
+       animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88"
+       //animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+   });
+
+     movingBox.one("click",function() {
+       console.log("movingClick");
+       scene.append(hoverBox);
+       hoverBox.attr({ id:"hoverBox",
+                       geometry:"primative: box",
+                       position:" 6.24 7.50 0.18",
+                       scale:"0 0 0",
+                       animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
+                       animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -4.36 7.5 0.18"
+                    });
+       hoverBox.append(hoverLight);
+       hoverLight.attr({
+         light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+         position:"5.4 -0.03 -4.04",
+         rotation:"21.77 -177.62 2.86",
+         animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
+         animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -0.59 -0.03 -4.04"
+       });
+     });
+
+
+ });
+
+
+
+
 
 
 
