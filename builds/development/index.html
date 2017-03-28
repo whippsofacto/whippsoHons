@@ -30,15 +30,13 @@
         <!-- Image link template to be reused. -->
       </a-assets>
       <!-- test area -->
+      <!--
       <a-entity
              geometry="primative: box"
              position="2.0 1.26 -4.7"
              rotation="0 90 0">
        </a-entity>
-       <a-entity id="myBox"
-              geometry="primative: box"
-              position=" -2.0 1.26 -4.7"
-              scale="1 1 1"></a-entity>
+
        <a-entity id="myBox1"
               geometry="primative: box"
               position=" 0.0 1.26 -4.7">
@@ -46,7 +44,15 @@
        <a-entity id="myBox2"
               geometry="primative: box"
               position=" -4.0 1.26 -4.7">
-            </a-entity>
+            </a-entity>-->
+
+      <a-entity id="myBox"
+             geometry="primative: box"
+             material="color: yellow"
+             position=" 10.83 2 0.41"
+             scale="1 1 1">
+             <a-entity id="spotBox" light="color: #9ef6ff; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot" position ="-3.02 0.45 1.98"rotation="0 -80 0"></a-entity>
+           </a-entity>
 
 
       <!-- Models added to scene-->
@@ -93,12 +99,14 @@
       <!-- Lighting -->
       <!--<a-entity light="type: hemisphere; color: #AAA; groundColor: #000000; intensity: 0.9;"></a-entity>-->
       <!--<a-entity light="type: ambient; color: #DC8874; intensity: 0.5;"></a-entity>-->
+      <!--<a-entity id="ambient" light="type: ambient; color: #BBB"></a-entity>-->
+      <a-entity id="spot" light="decay: -50; intensity: 0.1; penumbra: 0.16; type: spot" position ="0 4.9 0"rotation="-90 0 0"></a-entity>
 
 
 
       <!-- Sky -->
-      <a-gradient-sky material="shader: gradient; topColor: 140 200 250; bottomColor: 172 233 237;"></a-gradient-sky>
-
+      <!-- ORIGINAL BLUE <a-gradient-sky material="shader: gradient; topColor: 140 200 250; bottomColor: 172 233 237;"></a-gradient-sky>-->
+      <a-gradient-sky material="shader: gradient; topColor: 28 29 33; bottomColor: 12 12 41;"></a-gradient-sky>
 
       <!-- Checkpoints -->
        <a-entity position="1 0 1">
