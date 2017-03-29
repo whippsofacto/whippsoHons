@@ -129,8 +129,29 @@ AFRAME.registerComponent('foo', {
         light:"type: ambient; color: #BBB"
       });
         scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
-        
 
+        $('#signPost').one("click",function(){
+          entity.attr({"obj-model": "obj: #warning-obj; mtl: #warning-mtl",
+                           id:"warnText" ,
+                           position:"3.72 2.49 -1.55",
+                           rotation:" 0 -136.94 -89.95",
+                           animation__explode:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 1 1 1"
+
+          })
+          setTimeout(function () {
+            $('#clown-img').attr({
+            visible:"true",
+            sound:"autoplay: true; volume: 0.04; loop:false; src: #scream"});
+          }, 2000);
+
+          setTimeout(function(){
+            $('#clown-img').attr({
+            visible:"false"
+          });
+          },7000)
+
+
+        });
 
     });
   });
