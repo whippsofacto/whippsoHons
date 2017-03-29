@@ -30,8 +30,9 @@ AFRAME.registerComponent('foo', {
     var nestedEntity = $(document.createElement('a-entity'));
     var sky = $('#sky');
 
-    //var yesBtn = $(document.createElement('a-plane'));
-    //var noBtn = $(document.createElement('a-plane'));
+
+    var yesBtn = $(document.createElement('a-plane'));
+    var noBtn = $(document.createElement('a-plane'));
 
 
     //--- Intro ----------------------------------------//
@@ -66,7 +67,7 @@ AFRAME.registerComponent('foo', {
                   sound:"on: click; src: #click-sound",
                   scale:"0 0 0",
                   animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
-                  animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -2.61 2 10.33"
+                  animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -2.61 2 10.33"
             });
      movingBox.append(movingLight);
      movingLight.attr({
@@ -75,7 +76,7 @@ AFRAME.registerComponent('foo', {
        position:"-0.59 -0.03 -4.04",
        rotation:"35.58 -178.19 0",
        animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-       animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+       animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
    });
 
        //second box click function
@@ -129,13 +130,14 @@ AFRAME.registerComponent('foo', {
         light:"type: ambient; color: #BBB"
       });
         scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
-
-        $('#signPost').one("click",function(){
+        $('#signPost').removeAttr("visible");
+        $('#signPost').attr({ sound:"on: click; src: #click-sound"})
+      /*  $('#signPost').one("click",function(){
           entity.attr({"obj-model": "obj: #warning-obj; mtl: #warning-mtl",
                            id:"warnText" ,
                            position:"3.72 2.49 -1.55",
                            rotation:" 0 -136.94 -89.95",
-                           animation__explode:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 1 1 1"
+                           animation__explode:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.6 0.6 0.6"
 
           })
           setTimeout(function () {
@@ -148,26 +150,73 @@ AFRAME.registerComponent('foo', {
             $('#clown-img').attr({
             visible:"false"
           });
-          },7000)
+          entity.attr({   id: "frightQuestion",
+                          "obj-model": "obj: #fright-obj; mtl: #fright-mtl",
+                          scale:"0.6 0.6 0.6",
+                          position:"-0.89 2.26 -5.20",
+                          rotation:"90 90 90",
+          })
+          entity.append(yesBtn);
+          yesBtn.attr({
+              id: "yesBtn",
+              scale: "1.5 1.5 1.5",
+              rotation:" -81.36 -37.24 126.05",
+              position:"-2 2 0.5",
+              material: "color: #1BEDC3",
+              animation__conescale:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.4 0.4 0.4"});
+          entity.append(noBtn);
+              noBtn.attr({
+                  id: "noBtn",
+                  scale: "0.7 0.7 0.7",
+                  rotation:" -59.59 76.20 10.31",
+                  position:"-3.38 0.5 0.5",
+                  animation__conescale:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.4 0.4 0.4"});
+        },5000)
+
 
 
         });
-
+*/
     });
+
+    $("#signPost").one("click",function(){
+      $("#bridge").removeAttr('visible');
+      //text
+      setTimeout(function(){
+        entity.attr({  id:"bridgeOpenText",
+                       "obj-model":"obj: #bridgeOpen-obj; mtl: #bridgeOpen-mtl",
+                       scale:"0.6 0.6 0.6",
+                       position:"0.2 2.26 -5.52",
+                       rotation:"0 0 0"});
+
+      },3000);
+
+      setTimeout(function(){
+        entity.attr({  id:"answerText",
+         "obj-model":"obj: #answer-obj; mtl: #answer-mtl",
+         scale:"0.6 0.6 0.6",
+         position:"0.2 2.26 -6.20",
+         rotation:"0 0 0"});
+         $("#testBox").attr({sound:"on: click; src: #click-sound"});
+
+      },7000);
+
+      setTimeout(function(){
+     entity.attr({
+                   id:"riddleText",
+                   "obj-model":"obj: #riddle-obj; mtl: #riddle-mtl",
+                   scale:"0.6 0.6 0.6",
+                   position:"0.2 2.26 -7.20",
+                   rotation:"0 0 0"});
+
+      $("#testBox").one("click",function(){
+       $('#pads').removeAttr('visible');
+      });
+      },12000);
   });
 
 
-
-
-
-
-
-
-
-
-
-
-
+  });
 
     /*
     //--- Animations Testing ---//
@@ -238,21 +287,6 @@ AFRAME.registerComponent('foo', {
     });
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   }
