@@ -14,7 +14,6 @@ var animation = require('aframe-animation-component');
 extras.registerAll();
 
 
-
 //*------ Components -----*//
 AFRAME.registerComponent('foo', {
   init: function () {
@@ -29,13 +28,13 @@ AFRAME.registerComponent('foo', {
     var hoverLight = $(document.createElement('a-entity'));
     var light = $(document.createElement('a-entity'));
     var nestedEntity = $(document.createElement('a-entity'));
+    var sky = $('#sky');
 
     //var yesBtn = $(document.createElement('a-plane'));
     //var noBtn = $(document.createElement('a-plane'));
 
 
     //--- Intro ----------------------------------------//
-
 
 
     setTimeout(function () {
@@ -67,28 +66,32 @@ AFRAME.registerComponent('foo', {
                   sound:"on: click; src: #click-sound",
                   scale:"0 0 0",
                   animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
-        //          animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -2.61 2 10.33"
+                  animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -2.61 2 10.33"
             });
      movingBox.append(movingLight);
      movingLight.attr({
+       id:"movingLight",
        light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
        position:"-0.59 -0.03 -4.04",
        rotation:"35.58 -178.19 0",
        animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-      // animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+       animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
    });
 
-     movingBox.one("click",function() {
+       //second box click function
+       movingBox.one("click",function() {
        console.log("movingClick");
-       $('#lightBox').removeAttr('sound');
        scene.append(hoverBox);
+       //Add 3rd Box
        hoverBox.attr({ id:"hoverBox",
                        geometry:"primative: box",
                        position:" 6.24 7.50 0.18",
+                       sound:"on: click; src: #click-sound",
                        scale:"0 0 0",
                        animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
                     });
        hoverBox.append(hoverLight);
+       //Add lighting to the 3rd Box
        hoverLight.attr({
          light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
          position:"5.4 -0.03 -4.04",
@@ -96,19 +99,41 @@ AFRAME.registerComponent('foo', {
          animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
          animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -0.59 -0.03 -4.04"
        });
-       scene.append(entity);
+       //Prompt
        entity.attr({  id:"mustBeAnotherOneSomewhereText",
                       "obj-model":"obj: #anotherOneSomewhere-obj; mtl: #anotherOneSomewhere-mtl",
                       scale:"0.6 0.6 0.6",
                       position:"0.3 2.26 -5.20",
                       rotation:"90 0 0",
-                      animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
-     });
+                      animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"
+                  });
+                });
+
+      //3rd Box Function ---------------------//
+      hoverBox.one("click",function() {
+        //celebrate the lights coming on
+        entity.attr({  id:"aziz",
+                       "obj-model":"obj: #aziz-obj; mtl: #aziz-mtl",
+                       scale:"0.6 0.6 0.6",
+                       position:"0.3 2.26 -5.20",
+                       rotation:"90 0 0",
+                       animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
+
+        //sky animation
+        sky.attr({
+        animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 140 200 250",
+        animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 172 233 237"});
+        //lights ON!
+        scene.append(light);
+        light.attr({
+        light:"type: ambient; color: #BBB"
+      });
+        scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
+        
 
 
-
-
- });
+    });
+  });
 
 
 
