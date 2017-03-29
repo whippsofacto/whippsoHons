@@ -63,10 +63,11 @@ AFRAME.registerComponent('foo', {
      movingBox.attr({
                   id:"movingBox",
                   geometry:"primative: box",
-                  position:" 3.91 2 10.33",
+                  position:" 7.68 2 10.33",
+                  sound:"on: click; src: #click-sound",
                   scale:"0 0 0",
-                  animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
-                  //animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.49 2 10.33"
+                  animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
+        //          animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -2.61 2 10.33"
             });
      movingBox.append(movingLight);
      movingLight.attr({
@@ -74,18 +75,18 @@ AFRAME.registerComponent('foo', {
        position:"-0.59 -0.03 -4.04",
        rotation:"35.58 -178.19 0",
        animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-       animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+      // animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
    });
 
      movingBox.one("click",function() {
        console.log("movingClick");
+       $('#lightBox').removeAttr('sound');
        scene.append(hoverBox);
        hoverBox.attr({ id:"hoverBox",
                        geometry:"primative: box",
                        position:" 6.24 7.50 0.18",
                        scale:"0 0 0",
                        animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
-                       animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -4.36 7.5 0.18"
                     });
        hoverBox.append(hoverLight);
        hoverLight.attr({
@@ -95,7 +96,16 @@ AFRAME.registerComponent('foo', {
          animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
          animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -0.59 -0.03 -4.04"
        });
+       scene.append(entity);
+       entity.attr({  id:"mustBeAnotherOneSomewhereText",
+                      "obj-model":"obj: #anotherOneSomewhere-obj; mtl: #anotherOneSomewhere-mtl",
+                      scale:"0.6 0.6 0.6",
+                      position:"0.3 2.26 -5.20",
+                      rotation:"90 0 0",
+                      animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
      });
+
+
 
 
  });

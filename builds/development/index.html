@@ -13,6 +13,8 @@
       <!--- ASSETS -->
       <a-assets>
         <audio id="seaside" src="./assets/seaside.mp3" preload="auto"></audio>
+        <audio id="click-sound" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
+
         <!--Checkpoint Mixin -->
         <a-mixin id="checkpoint"></a-mixin>
         <a-mixin id="checkpoint-hovered" color="#6CEEB5"></a-mixin>
@@ -26,6 +28,8 @@
         <a-asset-item id="intro_1-mtl" src="./assets/models/textObj/intro_1.3.mtl"></a-asset-item>
         <a-asset-item id="lightsOnText-obj" src="./assets/models/textObj/lightsOn.obj"></a-asset-item>
         <a-asset-item id="lightsOnText-mtl" src="./assets/models/textObj/lightsOn.mtl"></a-asset-item>
+        <a-asset-item id="anotherOneSomewhere-obj" src="./assets/models/textObj/anotherOneSomewhere.obj"></a-asset-item>
+        <a-asset-item id="anotherOneSomewhere-mtl" src="./assets/models/textObj/anotherOneSomewhere.mtl"></a-asset-item>
         <!--Checkpoints-->
         <a-entity geometry="cylander" checkpoint="offset: 0 1.6 0" radius="0.8" height="0.06" color="#A6447D"></a-entity>
 
@@ -34,6 +38,7 @@
              geometry="primative: box"
              material="color: yellow"
              position=" 10.83 2 0.41"
+             sound="on: click; src: #click-sound"
              scale="0 0 0"
              animation__scale="property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1">
              <a-entity id="spotBox"
