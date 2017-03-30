@@ -130,7 +130,7 @@ AFRAME.registerComponent('foo', {
         light.attr({
         light:"type: ambient; color: #BBB"
       });
-        scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.3"});
+        scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
         $('#signPost').removeAttr("visible");
         $('#signPost').attr({ sound:"on: click; src: #click-sound"})
       /*  $('#signPost').one("click",function(){
@@ -219,19 +219,6 @@ AFRAME.registerComponent('foo', {
 
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     /*
     //--- Animations Testing ---//
     $('#testBox').click(function() {
@@ -301,21 +288,6 @@ AFRAME.registerComponent('foo', {
     });
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   }
