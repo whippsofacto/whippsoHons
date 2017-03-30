@@ -40,15 +40,47 @@ AFRAME.registerComponent('foo', {
 
 
     setTimeout(function () {
-        scene.append(entity);
-        entity.attr({  id:"intro1",
-                       "obj-model":"obj: #intro_1-obj; mtl: #intro_1-mtl",
-                       scale:"0.6 0.6 0.6",
-                       position:"-2.3 2.26 -5.20",
-                       rotation:"90 0 0",
-                       animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
+
     }, 200);
 
+    if (screen.width > 750){
+    scene.append(entity);
+    entity.attr({  id:"VRInfo",
+                   "obj-model":"obj: #vrClickInfo-obj; mtl: #vrClickInfo-mtl",
+                   scale:"7 7 7",
+                   position:"-29.5 9 -29",
+                   rotation:"25 45 1.5",
+                   });
+    entity.append($(document.createElement("a-entity"))
+                 .attr({
+                 id:"VrInfoLight",
+                 light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                 position:"6.6 -1.3 2.7",
+                 rotation:"19.5 23.5 -0.57",
+                 //animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
+                 //animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+                })
+              );
+            } else {
+              scene.append(entity);
+              entity.attr({  id:"DektopInfo",
+                             "obj-model":"obj: #VRSignDesktop-obj; mtl: #VRSignDesktop-mtl",
+                             scale:"7 7 7",
+                             position:"-29.5 9 -29",
+                             rotation:"25 45 1.5",
+                             });
+              entity.append($(document.createElement("a-entity"))
+                           .attr({
+                           id:"VRSignDesktopLight",
+                           light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                           position:"6.6 -1.3 2.7",
+                           rotation:"19.5 23.5 -0.57"})
+                           //animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
+                           //animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+                );
+          }
+
+/*
     setTimeout(function(){
       scene.append(entity);
       entity.attr({  id:"lightsOnIntro",
@@ -57,7 +89,7 @@ AFRAME.registerComponent('foo', {
                      position:"0.2 2.26 -3.20",
                      rotation:"90 0 0"});
    },9000);
-
+*/
    $('#lightBox').one("click",function() {
      console.log("ello box");
      scene.append(movingBox);
@@ -65,7 +97,7 @@ AFRAME.registerComponent('foo', {
                   id:"movingBox",
                   geometry:"primative: box",
                   position:" 7.68 2 10.33",
-                  sound:"on: click; src: #click-sound",
+                  sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",
                   scale:"0 0 0",
                   animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
                   animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -2.61 2 10.33"
@@ -88,7 +120,7 @@ AFRAME.registerComponent('foo', {
        hoverBox.attr({ id:"hoverBox",
                        geometry:"primative: box",
                        position:" 6.24 7.50 0.18",
-                       sound:"on: click; src: #click-sound",
+                       sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",
                        scale:"0 0 0",
                        animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
                     });
@@ -132,7 +164,7 @@ AFRAME.registerComponent('foo', {
       });
         scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
         $('#signPost').removeAttr("visible");
-        $('#signPost').attr({ sound:"on: click; src: #click-sound"})
+        $('#signPost').attr({sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
       /*  $('#signPost').one("click",function(){
           entity.attr({"obj-model": "obj: #warning-obj; mtl: #warning-mtl",
                            id:"warnText" ,
@@ -198,7 +230,7 @@ AFRAME.registerComponent('foo', {
          scale:"0.6 0.6 0.6",
          position:"0.2 2.26 -6.20",
          rotation:"0 0 0"});
-         $("#testBox").attr({sound:"on: click; src: #click-sound"});
+         $("#testBox").attr({ sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
 
       },7000);
 
