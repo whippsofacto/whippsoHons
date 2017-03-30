@@ -35,8 +35,9 @@ if (env === 'development'){
 jsDir = [
   //add all the directories that contain javascript files
   //order of processing is the same as the order of items in this array
-  './components/scripts/index.js',
-  './components/scripts/myScripts.js'
+  //**** uncomment if adding new require statement *****//
+  //'./components/scripts/index.js',
+  './components/scripts/scripts.js'
 ];
 
 sassDir = ['./components/sass/style.scss'];
@@ -102,7 +103,7 @@ gulp.task('js', function(){
   //pass the gulp file the sources array
   gulp.src(jsDir)
    //pipe the javascript files in js array to a file called script.js
-   .pipe(gconcat('script.js'))
+   //.pipe(gconcat('script.js'))
    //pass the script.js through the browserify plug in
    .pipe(browserify())
    //if the env variable is set to prodction, uglify the js
