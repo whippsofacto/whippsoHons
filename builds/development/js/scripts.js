@@ -29,7 +29,7 @@ AFRAME.registerComponent('foo', {
 
     }, 200);
 
-    if (screen.width > 750){
+    if (screen.width < 750){
     scene.append(entity);
     entity.attr({  id:"VRInfo",
                    "obj-model":"obj: #vrClickInfo-obj; mtl: #vrClickInfo-mtl",
@@ -42,9 +42,7 @@ AFRAME.registerComponent('foo', {
                  id:"VrInfoLight",
                  light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
                  position:"6.6 -1.3 2.7",
-                 rotation:"19.5 23.5 -0.57",
-                 //animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-                 //animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+                 rotation:"19.5 23.5 -0.57"
                 })
               );
             } else {
@@ -66,6 +64,29 @@ AFRAME.registerComponent('foo', {
                 );
           }
 
+//Create the Box -- yellow, right of starting point.
+scene.append($(document.createElement("a-entity"))
+            .attr({
+                     id:"lightBox",
+                     geometry:"primative: box",
+                     material:"color: yellow",
+                     position:" 10.83 2 0.41",
+                     scale:"0 0 0",
+                     animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
+          })
+        );
+  // Create the lighting for the Box above as a child element
+  $('#lightBox').append($(document.createElement("a-entity"))
+                    .attr({
+                                id:"spotBox",
+                                light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                                position:"-3.02 -0.03 -0.12",
+                                rotation:"35.58 -87.94 0",
+                                animation__lightsUp: "property: light.intensity; dir: normal; dur: 12000; easing: easeInSine; loop: false; from: 0; to: 0.88"
+                                  })
+                                );
+
+
 /*
     setTimeout(function(){
       scene.append(entity);
@@ -83,7 +104,7 @@ AFRAME.registerComponent('foo', {
                   id:"movingBox",
                   geometry:"primative: box",
                   position:" 7.68 2 10.33",
-                  sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",
+                  sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
                   scale:"0 0 0",
                   animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
                   animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -2.61 2 10.33"
