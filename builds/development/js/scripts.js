@@ -106,18 +106,31 @@ entity.append($(document.createElement("a-entity"))
 //----- Once the start button is clicked, remove the opening signs and start the experience -------------------
 if (screen.width < 750){
   $('#startBox').one("click",function(){
-    $("#VRinfo").remove();
-    alert("removed");
+    $("#startBox").attr({
+    sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2"
+    })
+    $("#VRInfo").attr({
+     animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
+     animation__scaleOut:"property: position; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 2.0 -4"
+    });
+    setTimeout(function(){
+    $("#VRInfo").remove();
+  },700);
   });
 } else {
  $('#startBox').one("click",function(){
+   $("#startBox").attr({
+   sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2"
+   })
+   $("#desktopInfo").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
+    animation__scaleOut:"property: position; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 2.0 -4"
+   });
+   setTimeout(function(){
    $("#desktopInfo").remove();
-   alert("removed");
+ },700);
  });
 }
-
-
-
 //Create the Box -- yellow, right of starting point.
 scene.append($(document.createElement("a-entity"))
             .attr({
