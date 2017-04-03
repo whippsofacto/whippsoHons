@@ -32,36 +32,86 @@ AFRAME.registerComponent('foo', {
     scene.append(entity);
     entity.attr({  id:"VRInfo",
                    "obj-model":"obj: #vrClickInfo-obj; mtl: #vrClickInfo-mtl",
-                   scale:"7 7 7",
-                   position:"-29.5 9 -29",
-                   rotation:"25 45 1.5",
+                   scale:"0 0 0",
+                   position:"0 4 -3",
+                   rotation:"0 0 0",
+                   animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 3 3 3"
                    });
+   entity.append($(document.createElement("a-entity"))
+                .attr({
+                id:"startBox",
+                "obj-model":"obj: #start-obj; mtl: #start-mtl",
+                scale:"0.5 0.5 0.5",
+                position:"-0.1 -1.2 -1.8",
+                rotation:"0 0 0",
+               })
+             );
     entity.append($(document.createElement("a-entity"))
                  .attr({
-                 id:"VrInfoLight",
+                 id:"VrInfoLightR",
                  light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-                 position:"6.6 -1.3 2.7",
-                 rotation:"19.5 23.5 -0.57"
+                 scale:"0 0 0",
+                 position:"10 -1.3 2.7",
+                 rotation:"19.5 23.5 -0.57",
+                 animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
                 })
+              );
+    entity.append($(document.createElement("a-entity"))
+                 .attr({
+                 id:"VrInfoLightL",
+                 light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                 scale:"0 0 0",
+                 position:"-14 -1.3 2.7",
+                 rotation:"25.78 -31.51 1.72",
+                 animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+    })
               );
             } else {
               scene.append(entity);
-              entity.attr({  id:"DektopInfo",
+              entity.attr({  id:"desktopInfo",
                              "obj-model":"obj: #VRSignDesktop-obj; mtl: #VRSignDesktop-mtl",
-                             scale:"7 7 7",
-                             position:"-29.5 9 -29",
-                             rotation:"25 45 1.5",
+                             scale:"0 0 0",
+                             position:"0 4 -3",
+                             rotation:"0 0 0",
+                             animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 3 3 3"
                              });
+             entity.append($(document.createElement("a-entity"))
+                          .attr({
+                          id:"startBox",
+                          "obj-model":"obj: #start-obj; mtl: #start-mtl",
+                          scale:"0.5 0.5 0.5",
+                          position:"-0.1 -1.2 -1.8",
+                          rotation:"0 0 0",
+                         })
+                       );
               entity.append($(document.createElement("a-entity"))
                            .attr({
-                           id:"VRSignDesktopLight",
+                           id:"VRSignDesktopLightR",
                            light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-                           position:"6.6 -1.3 2.7",
-                           rotation:"19.5 23.5 -0.57"})
-                           //animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-                           //animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+                           scale:"0 0 0",
+                           position:"10 -1.3 2.7",
+                           rotation:"19.5 23.5 -0.57",
+                           animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+                           })
+
                 );
+              entity.append($(document.createElement("a-entity"))
+                           .attr({
+                           id:"VRSignDesktopLightL",
+                           light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                           scale:"0 0 0",
+                           position:"-14 -1.3 2.7",
+                           rotation:"25.78 -31.51 1.72",
+                           animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+                          })
+                    );
           }
+
+          $('#startBox').one("click",function(){
+            $("#desktopInfo").remove();
+            alert("removed");
+          });
+
 
 //Create the Box -- yellow, right of starting point.
 scene.append($(document.createElement("a-entity"))
