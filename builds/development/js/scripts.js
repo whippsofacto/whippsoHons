@@ -24,7 +24,6 @@ AFRAME.registerComponent('foo', {
 
     //--- Intro ----------------------------------------//
 
-
     setTimeout(function () {
 
     }, 200);

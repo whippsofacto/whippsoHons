@@ -5,13 +5,17 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1">
     <title> Lighthouse </title>
+    <link rel="stylesheet" href="./css/style.css"/>
     <script src="js/index.js"> </script>
     <script src="js/scripts.js"> </script>
-
+    <style>
+  
+    </style>
 </head>
 <body>
+  <div id="vrScene">
   <!-- fog="type: exponential; color: #8CC8FA; density: 0.06;" -->
-  <a-scene foo>
+  <a-scene embedded foo>
       <!--- ASSETS -->
       <a-assets>
         <audio id="seaside" src="./assets/seaside.mp3" preload="auto"></audio>
@@ -106,4 +110,5 @@
          <!--5--><a-cylinder checkpoint="offset: 0 1.6 0" radius="0.8" height="0.06" position="-8.67 0.79 -40.23" color="#A6447D"></a-cylinder>
        </a-entity>
     </a-scene>
+  </div>
 </body>
