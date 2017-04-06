@@ -114,8 +114,38 @@ if (screen.width < 750){
     });
     setTimeout(function(){
     $("#VRInfo").remove();
-  },700);
-  });
+    scene.append($(document.createElement("a-entity"))
+                .attr({ id:"questionBlock",
+                       "obj-model":"obj: #questionBlock-obj; mtl: #questionBlock-mtl",
+                        position:"-4.83 1.80 -0.04",
+                        scale:"1.9 1.9 1.9",
+                        rotation:"0 90 0"})
+            );
+        $("#questionBlock").append($(document.createElement("a-entity"))
+          .attr({
+            id:"questionBlockLight",
+            light:"color: #ffd913; angle:13.24; intensity:0.3; groundColor: #fff; decay: -100; penumbra: 1; type: spot",
+            position:"0 -0.5 5",
+            rotation:"6.88 -4 -0.5"
+           })
+       );
+       //add Circle after 4 seconds
+       setTimeout(function(){
+       $("#questionBlock").append($(document.createElement("a-ring"))
+         .attr({
+           id: "circle",
+           "radius-inner": "1.4",
+           "radius-outer": "1.5",
+           position:"-0.01 0.39 -1.25",
+           material:"color: yellow",
+           sound:"autoplay: on; loop: true; src: #block-alert; volume: 5; poolSize: 2",
+           "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
+           //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+         })
+       );
+     },4000);
+    },700);
+    });
 } else {
  $('#startBox').one("click",function(){
    $("#startBox").attr({
