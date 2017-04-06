@@ -24,6 +24,7 @@ AFRAME.registerComponent('foo', {
 //--- Opening State ----------------------------------------//
 //-- Show signs to inform user of how to interact with the environment --//
 //--If a mobile sized screen show the VR Info
+//-------Small Screen -------//
 if (screen.width < 750){
   scene.append(entity);
     entity.attr({  id:"VRInfo",
@@ -62,6 +63,7 @@ if (screen.width < 750){
     animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
     })
   );
+//-------Large Screen -------//
 //--Else, show the desktop info --//
 } else {
 scene.append(entity);
@@ -103,6 +105,7 @@ entity.append($(document.createElement("a-entity"))
   );
 }
 //----- Once the start button is clicked, remove the opening signs and start the experience -------------------
+//-------Small Screen -------//
 if (screen.width < 750){
   $('#startBox').one("click",function(){
     $("#startBox").attr({
@@ -129,6 +132,11 @@ if (screen.width < 750){
             rotation:"6.88 -4 -0.5"
            })
        );
+       //add click event to the question block
+       $("#questionBlock").click(function(){
+         $("#circle").remove();
+         alert("clicked");
+       });
        //add Circle after 4 seconds
        setTimeout(function(){
        $("#questionBlock").append($(document.createElement("a-ring"))
@@ -146,6 +154,7 @@ if (screen.width < 750){
      },4000);
     },700);
     });
+//-------Large Screen -------//
 } else {
  $('#startBox').one("click",function(){
    $("#startBox").attr({
@@ -155,6 +164,7 @@ if (screen.width < 750){
     animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
     animation__scaleOut:"property: position; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 2.0 -4"
    });
+
    setTimeout(function(){
   //-- Remove the startUp elements and add the question block
    $("#desktopInfo").remove();
@@ -174,7 +184,7 @@ if (screen.width < 750){
           })
       );
       //add Circle after 4 seconds
-      setTimeout(function(){
+      var timeoutVar = setTimeout(function(){
       $("#questionBlock").append($(document.createElement("a-ring"))
         .attr({
           id: "circle",
@@ -182,15 +192,26 @@ if (screen.width < 750){
           "radius-outer": "1.5",
           position:"-0.01 0.39 -1.25",
           material:"color: yellow",
-          sound:"autoplay: on; loop: true; src: #block-alert; volume: 5; poolSize: 2",
+          sound:"autoplay: on; loop: true; src: #block-alert; volume: 0.8; poolSize: 2",
           "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
           //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
         })
       );
-    },4000);
-   },700);
+    },5000);//end of circle timeout
+    //add click event to the question block
+    $("#questionBlock").click(function(){
+      // remove the timer for the semi-circle if clicked before ring element added
+      clearTimeout(timeoutVar);
+      $("#circle").remove();
+      alert("clicked");
+    });
+  },700);//end of remove startup elements and add question block
  });
 }
+
+
+
+
 
 
 
