@@ -26,34 +26,36 @@ AFRAME.registerComponent('foo', {
 //--If a mobile sized screen show the VR Info
 //-------Small Screen -------//
 if (screen.width < 750){
-  scene.append(entity);
-    entity.attr({  id:"VRInfo",
-    "obj-model":"obj: #vrClickInfo-obj; mtl: #vrClickInfo-mtl",
-    scale:"0 0 0",
-    position:"0 5.6 -3",
-    rotation:"0 0 0",
-    animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 3 3 3"
-  });
-  entity.append($(document.createElement("a-entity"))
+  scene.append($(document.createElement('a-image'))
+      .attr({
+      id:"VRInfo",
+      src: "#clickInfoVR",
+      position:"0 2.6 -3.6",
+      rotation:"0 0 0",
+      scale:" 0 0 0",
+      animation__scale:"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop: false; to: 3 2 2"
+     })
+   );
+  $("#VRInfo").append($(document.createElement("a-image"))
     .attr({
     id:"startBox",
-    "obj-model":"obj: #start-obj; mtl: #start-mtl",
-    scale:"0.5 0.5 0.5",
-    position:"-0.1 -1.1 -1.8",
-    rotation:"0 0 0",
+    src: "#startBtn",
+    scale:"0.4 0.4 0.4",
+    position:"0.37 -0.64 0.11",
+    rotation:"0 -15 0"
     })
   );
-  entity.append($(document.createElement("a-entity"))
+  $("#VRInfo").append($(document.createElement("a-entity"))
     .attr({
     id:"VrInfoLightR",
     light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
     scale:"0 0 0",
-    position:"10 -1.3 2.7",
+    position:"10 -1.3 6.73",
     rotation:"19.5 23.5 -0.57",
     animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
     })
   );
-  entity.append($(document.createElement("a-entity"))
+  $("#VRInfo").append($(document.createElement("a-entity"))
     .attr({
     id:"VrInfoLightL",
     light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
@@ -66,40 +68,42 @@ if (screen.width < 750){
 //-------Large Screen -------//
 //--Else, show the desktop info --//
 } else {
-scene.append(entity);
-  entity.attr({  id:"desktopInfo",
-   "obj-model":"obj: #VRSignDesktop-obj; mtl: #VRSignDesktop-mtl",
-   scale:"0 0 0",
-   position:"0 5.6 -3",
-   rotation:"0 0 0",
-   animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 3 3 3"
-   });
-entity.append($(document.createElement("a-entity"))
+scene.append($(document.createElement('a-image'))
+    .attr({
+    id:"desktopInfo",
+    src: "#clickInfo",
+    position:"0 2.6 -3.6",
+    rotation:"0 0 0",
+    scale:" 0 0 0",
+    animation__scale:"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop: false; to: 3 2 2"
+   })
+ );
+$("#desktopInfo").append($(document.createElement("a-image"))
   .attr({
   id:"startBox",
-  "obj-model":"obj: #start-obj; mtl: #start-mtl",
-  scale:"0.5 0.5 0.5",
-  position:"-0.1 -1.1 -1.8",
-  rotation:"0 0 0",
+  src: "#startBtn",
+  scale:"0.4 0.4 0.4",
+  position:"0.37 -0.64 0.11",
+  rotation:"0 -15 0",
   })
 );
-  entity.append($(document.createElement("a-entity"))
+$("#desktopInfo").append($(document.createElement("a-entity"))
     .attr({
     id:"VRSignDesktopLightR",
     light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
     scale:"0 0 0",
-    position:"10 -1.3 2.7",
+    position:"10.00 -1.3 6.73",
     rotation:"19.5 23.5 -0.57",
     animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
     })
   );
-  entity.append($(document.createElement("a-entity"))
+$("#desktopInfo").append($(document.createElement("a-entity"))
     .attr({
     id:"VRSignDesktopLightL",
     light:"color: #fff; angle 39.5 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
     scale:"0 0 0",
     position:"-14 -1.3 2.7",
-    rotation:"25.78 -31.51 1.72",
+    rotation:"25.78 -31.51 5.72",
     animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
     })
   );
@@ -109,13 +113,17 @@ entity.append($(document.createElement("a-entity"))
 if (screen.width < 750){
   $('#startBox').one("click",function(){
     $("#startBox").attr({
-    sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2"
+    sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
+    animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+
     })
     $("#VRInfo").attr({
      animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
      animation__scaleOut:"property: position; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 2.0 -4"
     });
+
     setTimeout(function(){
+   //-- Remove the startUp elements and add the question block
     $("#VRInfo").remove();
     scene.append($(document.createElement("a-entity"))
                 .attr({ id:"questionBlock",
@@ -132,13 +140,8 @@ if (screen.width < 750){
             rotation:"6.88 -4 -0.5"
            })
        );
-       //add click event to the question block
-       $("#questionBlock").click(function(){
-         $("#circle").remove();
-         alert("clicked");
-       });
        //add Circle after 4 seconds
-       setTimeout(function(){
+       var timeoutVar = setTimeout(function(){
        $("#questionBlock").append($(document.createElement("a-ring"))
          .attr({
            id: "circle",
@@ -146,19 +149,50 @@ if (screen.width < 750){
            "radius-outer": "1.5",
            position:"-0.01 0.39 -1.25",
            material:"color: yellow",
-           sound:"autoplay: on; loop: true; src: #block-alert; volume: 5; poolSize: 2",
+           sound:"autoplay: on; loop: true; src: #block-alert; volume: 0.8; poolSize: 2",
            "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
            //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
          })
        );
-     },4000);
-    },700);
-    });
+     },5000);//end of circle timeout
+     //--- Question Block Click Event -------------------------//
+     $("#questionBlock").click(function(){
+       // remove the timer for the semi-circle if clicked before ring element added
+       clearTimeout(timeoutVar);
+       console.log("clicked");
+       $("#circle").remove();
+       //add animation to questionBlock
+       $("#questionBlock")
+         .attr({
+           //sound:"autoplay: on; loop: false; src: #box-sound; volume: 0.8; poolSize: 2",
+           "animation__bump":"property: scale; dir: alternate; dur: 100; easing: easeInSine; loop: false; to: 1.2 1 1.2"
+           })
+       //add sound to hidden entity
+       $("#questionBlock").append($(document.createElement("a-entity"))
+         .attr({
+           id: "questionBlockSound",
+           sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
+           //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+         })
+       );
+       // remove the animation attribute and the questionBlock sound when clicked
+       setTimeout( function () {
+       $('#questionBlockSound').remove();
+       $("#questionBlock").removeAttr("animation__bump");
+       //alert("removed");
+     },500);// end of add sound to hidden entity
+
+
+     });
+   },700);//end of remove startup elements and add question block
+  });
 //-------Large Screen -------//
 } else {
  $('#startBox').one("click",function(){
    $("#startBox").attr({
-   sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2"
+   sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
+   animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+
    })
    $("#desktopInfo").attr({
     animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
@@ -198,12 +232,34 @@ if (screen.width < 750){
         })
       );
     },5000);//end of circle timeout
-    //add click event to the question block
+    //--- Question Block Click Event -------------------------//
     $("#questionBlock").click(function(){
       // remove the timer for the semi-circle if clicked before ring element added
       clearTimeout(timeoutVar);
+      console.log("clicked");
       $("#circle").remove();
-      alert("clicked");
+      //add animation to questionBlock
+      $("#questionBlock")
+        .attr({
+          //sound:"autoplay: on; loop: false; src: #box-sound; volume: 0.8; poolSize: 2",
+          "animation__bump":"property: scale; dir: alternate; dur: 100; easing: easeInSine; loop: false; to: 1.2 1 1.2"
+          })
+      //add sound to hidden entity
+      $("#questionBlock").append($(document.createElement("a-entity"))
+        .attr({
+          id: "questionBlockSound",
+          sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
+          //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+        })
+      );
+      // remove the animation attribute and the questionBlock sound when clicked
+      setTimeout( function () {
+      $('#questionBlockSound').remove();
+      $("#questionBlock").removeAttr("animation__bump");
+      //alert("removed");
+    },500);// end of add sound to hidden entity
+
+
     });
   },700);//end of remove startup elements and add question block
  });
