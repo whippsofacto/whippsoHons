@@ -175,6 +175,34 @@ if (screen.width < 750){
            //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
          })
        );
+       //add the textBox
+       $("#questionBlock").append($(document.createElement("a-image"))
+         .attr({
+           id:"startInfoText",
+           src:"#startInfo",
+           scale: "2.5 1.5 1.5",
+           position:"0 0.38 0.28",
+           rotation:"0 0 0"
+         })
+       );
+       //timeout and remove the first question block and replace with the first objective.
+       setTimeout(function(){
+         $("#startInfoText").remove();
+         $("#questionBlock").append($(document.createElement("a-image"))
+           .attr({
+             id:"getGoingText",
+             src:"#getGoing",
+             scale: "2.5 1.5 1.5",
+             position:"0 0.38 0.28",
+             rotation:"0 0 0"
+           })
+         );
+       }, 4000);
+       //remove the second questionBlock
+       setTimeout(function(){
+        $("#getGoingText").remove();
+        $("#startInfoText").remove();
+       },8000);
        // remove the animation attribute and the questionBlock sound when clicked
        setTimeout( function () {
        $('#questionBlockSound').remove();
@@ -252,12 +280,41 @@ if (screen.width < 750){
           //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
         })
       );
+      //add the textBox
+      $("#questionBlock").append($(document.createElement("a-image"))
+        .attr({
+          id:"startInfoText",
+          src:"#startInfo",
+          scale: "2.5 1.5 1.5",
+          position:"0 0.38 0.28",
+          rotation:"0 0 0"
+        })
+      );
+      //timeout and remove the first question block and replace with the first objective.
+      setTimeout(function(){
+        $("#startInfoText").remove();
+        $("#questionBlock").append($(document.createElement("a-image"))
+          .attr({
+            id:"getGoingText",
+            src:"#getGoing",
+            scale: "2.5 1.5 1.5",
+            position:"0 0.38 0.28",
+            rotation:"0 0 0"
+          })
+        );
+      }, 4000);
+      //remove the second questionBlock
+      setTimeout(function(){
+       $("#getGoingText").remove();
+       $("#startInfoText").remove();
+      },8000);
       // remove the animation attribute and the questionBlock sound when clicked
       setTimeout( function () {
-      $('#questionBlockSound').remove();
-      $("#questionBlock").removeAttr("animation__bump");
-      //alert("removed");
+        $('#questionBlockSound').remove();
+        $("#questionBlock").removeAttr("animation__bump");
+        //alert("removed");
     },500);// end of add sound to hidden entity
+
 
 
     });
