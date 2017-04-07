@@ -176,47 +176,86 @@ if (screen.width < 750){
          })
        );
        //add the textBox
-       $("#questionBlock").append($(document.createElement("a-image"))
+       scene.append($(document.createElement("a-image"))
          .attr({
            id:"startInfoText",
            src:"#startInfo",
            scale: "2.5 1.5 1.5",
-           position:"0 0.38 0.28",
-           rotation:"0 0 0"
+           position:"-2.83 2.1 -0.04",
+           rotation:"0 90 0"
          })
        );
+
        //timeout and remove the first question block and replace with the first objective.
        setTimeout(function(){
          $("#startInfoText").remove();
-         $("#questionBlock").append($(document.createElement("a-image"))
+         scene.append($(document.createElement("a-image"))
            .attr({
              id:"getGoingText",
              src:"#getGoing",
              scale: "2.5 1.5 1.5",
-             position:"0 0.38 0.28",
-             rotation:"0 0 0"
+             position:"-2.83 2.1 -0.04",
+             rotation:"0 90 0"
            })
          );
        }, 4000);
+       //remove click Event
+       setTimeout(function(){
+         $("#getGoingText").remove();
+         scene.append($(document.createElement("a-image"))
+           .attr({
+             id:"lightsHintText",
+             src:"#lightsHint",
+             scale: "2.5 1.5 1.5",
+             position:"-2.83 2.1 -0.04",
+             rotation:"0 90 0"
+           })
+         );
+       }, 8000);
        //remove the second questionBlock
        setTimeout(function(){
         $("#getGoingText").remove();
         $("#startInfoText").remove();
-       },8000);
+        $("#lightsHintText").remove();
+
+        // -- Removes the original click function and applies a new click function ---------------------------//
+        // means that the original textboxes go and only the final message is
+        // displayed in the text box from this point
+        if ($("#questionBlock").hasClass("moreClicks")){
+          $("#questionBlock").off();
+          //what happens after the first click ----------------------//
+          $("#questionBlock").click(function(){
+            //show the lights hint message
+            scene.append($(document.createElement("a-image"))
+              .attr({
+                id:"lightsHintText",
+                src:"#lightsHint",
+                scale: "2.5 1.5 1.5",
+                position:"-2.83 2.1 -0.04",
+                rotation:"0 90 0"
+              })
+            );
+            //after 4 seconds remove the lights Hint message
+            setTimeout(function(){
+            $("#lightsHintText").remove();
+           }, 4000);
+          });
+        } // end of if statement
+
+      },13000);
        // remove the animation attribute and the questionBlock sound when clicked
        setTimeout( function () {
-       $('#questionBlockSound').remove();
-       $("#questionBlock").removeAttr("animation__bump");
-       //alert("removed");
+         $('#questionBlockSound').remove();
+         $("#questionBlock").removeAttr("animation__bump");
+         //alert("removed");
      },500);// end of add sound to hidden entity
+    });
+  },700);//end of remove startup elements and add question block
+});
 
-
-     });
-   },700);//end of remove startup elements and add question block
-  });
 //-------Large Screen -------//
 } else {
- $('#startBox').one("click",function(){
+ $('#startBox').click(function(){
    $("#startBox").attr({
    sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
    animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
@@ -261,7 +300,7 @@ if (screen.width < 750){
       );
     },5000);//end of circle timeout
     //--- Question Block Click Event -------------------------//
-    $("#questionBlock").click(function(){
+    $("#questionBlock").one("click",function(){
       // remove the timer for the semi-circle if clicked before ring element added
       clearTimeout(timeoutVar);
       console.log("clicked");
@@ -281,42 +320,80 @@ if (screen.width < 750){
         })
       );
       //add the textBox
-      $("#questionBlock").append($(document.createElement("a-image"))
+      scene.append($(document.createElement("a-image"))
         .attr({
           id:"startInfoText",
           src:"#startInfo",
           scale: "2.5 1.5 1.5",
-          position:"0 0.38 0.28",
-          rotation:"0 0 0"
+          position:"-2.83 2.1 -0.04",
+          rotation:"0 90 0"
         })
       );
+
       //timeout and remove the first question block and replace with the first objective.
       setTimeout(function(){
         $("#startInfoText").remove();
-        $("#questionBlock").append($(document.createElement("a-image"))
+        scene.append($(document.createElement("a-image"))
           .attr({
             id:"getGoingText",
             src:"#getGoing",
             scale: "2.5 1.5 1.5",
-            position:"0 0.38 0.28",
-            rotation:"0 0 0"
+            position:"-2.83 2.1 -0.04",
+            rotation:"0 90 0"
           })
         );
       }, 4000);
+      //remove click Event
+      setTimeout(function(){
+        $("#getGoingText").remove();
+        scene.append($(document.createElement("a-image"))
+          .attr({
+            id:"lightsHintText",
+            src:"#lightsHint",
+            scale: "2.5 1.5 1.5",
+            position:"-2.83 2.1 -0.04",
+            rotation:"0 90 0"
+          })
+        );
+      }, 8000);
       //remove the second questionBlock
       setTimeout(function(){
        $("#getGoingText").remove();
        $("#startInfoText").remove();
-      },8000);
+       $("#lightsHintText").remove();
+
+       // -- Removes the original click function and applies a new click function ---------------------------//
+       // means that the original textboxes go and only the final message is
+       // displayed in the text box from this point
+       if ($("#questionBlock").hasClass("moreClicks")){
+         $("#questionBlock").off();
+         //what happens after the first click ----------------------//
+         $("#questionBlock").click(function(){
+           //show the lights hint message
+           scene.append($(document.createElement("a-image"))
+             .attr({
+               id:"lightsHintText",
+               src:"#lightsHint",
+               scale: "2.5 1.5 1.5",
+               position:"-2.83 2.1 -0.04",
+               rotation:"0 90 0"
+             })
+           );
+           //after 4 seconds remove the lights Hint message
+           setTimeout(function(){
+           $("#lightsHintText").remove();
+          }, 4000);
+         });
+       } // end of if statement
+
+     },13000);
       // remove the animation attribute and the questionBlock sound when clicked
       setTimeout( function () {
         $('#questionBlockSound').remove();
         $("#questionBlock").removeAttr("animation__bump");
+        $("#questionBlock").addClass("moreClicks");
         //alert("removed");
     },500);// end of add sound to hidden entity
-
-
-
     });
   },700);//end of remove startup elements and add question block
  });
