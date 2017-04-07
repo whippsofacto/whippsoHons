@@ -257,7 +257,7 @@ if (screen.width < 750){
             setTimeout(function(){
             $("#lightsHintText").remove();
             $('#questionBlockSound').remove();
-          }, 5000);
+          }, 6000);
           });
         } // end of if statement
 
@@ -421,10 +421,9 @@ if (screen.width < 750){
            setTimeout(function(){
            $("#lightsHintText").remove();
            $('#questionBlockSound').remove();
-         }, 5000);
+         }, 6000);
          });
        } // end of if statement
-
      },13000);
       // remove the animation attribute and the questionBlock sound when clicked
       setTimeout( function () {
