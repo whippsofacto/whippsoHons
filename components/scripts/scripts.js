@@ -235,10 +235,29 @@ if (screen.width < 750){
                 rotation:"0 90 0"
               })
             );
+            //add sound to hidden entity
+            $("#questionBlock").append($(document.createElement("a-entity"))
+              .attr({
+                id: "questionBlockSound",
+                sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
+                //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+              })
+            );
+            setTimeout(function(){
+              $('#questionBlockSound')
+              .attr({
+               sound:"autoplay: on; loop: false; src: #close-box; volume: 3; poolSize: 2",
+             })
+             $("#lightsHintText")
+             .attr({
+               animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
+             })
+           },4000);
             //after 4 seconds remove the lights Hint message
             setTimeout(function(){
             $("#lightsHintText").remove();
-           }, 4000);
+            $('#questionBlockSound').remove();
+          }, 5000);
           });
         } // end of if statement
 
@@ -247,10 +266,11 @@ if (screen.width < 750){
        setTimeout( function () {
          $('#questionBlockSound').remove();
          $("#questionBlock").removeAttr("animation__bump");
+         $("#questionBlock").addClass("moreClicks");
          //alert("removed");
      },500);// end of add sound to hidden entity
-    });
-  },700);//end of remove startup elements and add question block
+     });
+   },700);//end of remove startup elements and add question block
 });
 
 //-------Large Screen -------//
@@ -379,10 +399,29 @@ if (screen.width < 750){
                rotation:"0 90 0"
              })
            );
+           //add sound to hidden entity
+           $("#questionBlock").append($(document.createElement("a-entity"))
+             .attr({
+               id: "questionBlockSound",
+               sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
+               //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+             })
+           );
+           setTimeout(function(){
+             $('#questionBlockSound')
+             .attr({
+              sound:"autoplay: on; loop: false; src: #close-box; volume: 3; poolSize: 2",
+            })
+            $("#lightsHintText")
+            .attr({
+              animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
+            })
+          },4000);
            //after 4 seconds remove the lights Hint message
            setTimeout(function(){
            $("#lightsHintText").remove();
-          }, 4000);
+           $('#questionBlockSound').remove();
+         }, 5000);
          });
        } // end of if statement
 
