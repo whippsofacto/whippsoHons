@@ -18,24 +18,21 @@ AFRAME.registerComponent('foo', {
 
 //--------- Functions -------------------------------------------//
 
-
 //QuestionBlockFunction
 //Changes the message that's inside the quesiton block -- function contains the animation, sound and text
 //Takes the params of an ID for the element and the Src of the image.
-questionBlockFunction = function(attId,attSrc){
+questionBlockFunction = function(attId){
   $("#questionBlock").off();
   //what happens after the first click ----------------------//
   $("#questionBlock").click(function(){
     //show the lights hint message
-    scene.append($(document.createElement("a-image"))
+      $("#" + attId)
       .attr({
-        id:attId,
-        src:attSrc,
+        visible: "true",
         scale: "2.5 1.5 1.5",
         position:"-2.83 2.1 -0.04",
         rotation:"0 90 0"
-      })
-    );
+      });
     //add sound to hidden entity
     $("#questionBlock").append($(document.createElement("a-entity"))
       .attr({
@@ -61,6 +58,23 @@ questionBlockFunction = function(attId,attSrc){
   }, 6000);
   });
 } // end of if statement
+
+
+//Ring Function
+ring = function(){
+$("#questionBlock").append($(document.createElement("a-ring"))
+  .attr({
+    id: "circle",
+    "radius-inner": "1.4",
+    "radius-outer": "1.5",
+    position:"-0.01 0.39 -1.25",
+    material:"color: yellow",
+    sound:"autoplay: on; loop: true; src: #block-alert; volume: 0.8; poolSize: 2",
+    "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
+    //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+    })
+  );
+}
 
 
 //Changing the block colors
@@ -119,10 +133,11 @@ toggleFunction = function(element,otherBox,anotherBox){
                 //removeElementsFromDom
                 setTimeout(function(){
                   $(element).removeAttr("animation__scaleDown");
-                  $("#trafficLights").remove()
-                  questionBlockFunction("moreSwitchesText","#moreSwitches");
-                  $("#questionBlock").addClass("secondTest")
-                  setTimeout(timeoutVar,3000);
+                  $("#trafficLights").remove();
+                  questionBlockFunction("moreSwitchesText");
+                  $("#questionBlock").addClass("secondTest");
+                  //add Circle after 4 seconds
+                  var timeoutVar = setTimeout(function(){ring()},4000);//end of circle timeout
                 },3000);
               }
               //if the green glass does not exceed 2 elements -- continue clicking
@@ -133,8 +148,6 @@ toggleFunction = function(element,otherBox,anotherBox){
        });
   });
 }
-
-
 
 //--- Opening State ----------------------------------------//
 //-- Show signs to inform user of how to interact with the environment --//
@@ -269,20 +282,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
 
 
        //add Circle after 4 seconds
-       var timeoutVar = setTimeout(function(){
-       $("#questionBlock").append($(document.createElement("a-ring"))
-         .attr({
-           id: "circle",
-           "radius-inner": "1.4",
-           "radius-outer": "1.5",
-           position:"-0.01 0.39 -1.25",
-           material:"color: yellow",
-           sound:"autoplay: on; loop: true; src: #block-alert; volume: 0.8; poolSize: 2",
-           "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
-           //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
-           })
-         );
-        },5000);//end of circle timeout
+       var timeoutVar = setTimeout(function(){ring()},4000);//end of circle timeout
 
 
      //--- Question Block Click Event -------------------------//
@@ -306,41 +306,35 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
          })
        );
        //add the textBox
-       scene.append($(document.createElement("a-image"))
+       $("#startInfoText")
          .attr({
-           id:"startInfoText",
-           src:"#startInfo",
+           visible: "true",
            scale: "2.5 1.5 1.5",
            position:"-2.83 2.1 -0.04",
            rotation:"0 90 0"
-         })
-       );
+         });
 
        //timeout and remove the first question block and replace with the first objective.
        setTimeout(function(){
          $("#startInfoText").remove();
-         scene.append($(document.createElement("a-image"))
+         $("#getGoingText")
            .attr({
-             id:"getGoingText",
-             src:"#getGoing",
+             visible:"true",
              scale: "2.5 1.5 1.5",
              position:"-2.83 2.1 -0.04",
              rotation:"0 90 0"
-           })
-         );
+           });
        }, 4000);
        //remove click Event
        setTimeout(function(){
          $("#getGoingText").remove();
-         scene.append($(document.createElement("a-image"))
+         $("#lightsHintText")
            .attr({
-             id:"lightsHintText",
-             src:"#lightsHint",
+             visible:"true",
              scale: "2.5 1.5 1.5",
              position:"-2.83 2.1 -0.04",
              rotation:"0 90 0"
-           })
-         );
+           });
        }, 8000);
        //remove the second questionBlock
        setTimeout(function(){
@@ -352,7 +346,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
         // means that the original textboxes go and only the final message is
         // displayed in the text box from this point
         if ($("#questionBlock").hasClass("moreClicks")){
-           questionBlockFunction("changeColorsText","#changeColors");
+           questionBlockFunction("changeColorsText");
          }
       },13000);
        // remove the animation attribute and the questionBlock sound when clicked

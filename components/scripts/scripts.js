@@ -17,24 +17,21 @@ AFRAME.registerComponent('foo', {
 
 //--------- Functions -------------------------------------------//
 
-
 //QuestionBlockFunction
 //Changes the message that's inside the quesiton block -- function contains the animation, sound and text
 //Takes the params of an ID for the element and the Src of the image.
-questionBlockFunction = function(attId,attSrc){
+questionBlockFunction = function(attId){
   $("#questionBlock").off();
   //what happens after the first click ----------------------//
   $("#questionBlock").click(function(){
     //show the lights hint message
-    scene.append($(document.createElement("a-image"))
+      $("#" + attId)
       .attr({
-        id:attId,
-        src:attSrc,
+        visible: "true",
         scale: "2.5 1.5 1.5",
         position:"-2.83 2.1 -0.04",
         rotation:"0 90 0"
-      })
-    );
+      });
     //add sound to hidden entity
     $("#questionBlock").append($(document.createElement("a-entity"))
       .attr({
@@ -136,7 +133,7 @@ toggleFunction = function(element,otherBox,anotherBox){
                 setTimeout(function(){
                   $(element).removeAttr("animation__scaleDown");
                   $("#trafficLights").remove();
-                  questionBlockFunction("moreSwitchesText","#moreSwitches");
+                  questionBlockFunction("moreSwitchesText");
                   $("#questionBlock").addClass("secondTest");
                   //add Circle after 4 seconds
                   var timeoutVar = setTimeout(function(){ring()},4000);//end of circle timeout
@@ -308,41 +305,35 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
          })
        );
        //add the textBox
-       scene.append($(document.createElement("a-image"))
+       $("#startInfoText")
          .attr({
-           id:"startInfoText",
-           src:"#startInfo",
+           visible: "true",
            scale: "2.5 1.5 1.5",
            position:"-2.83 2.1 -0.04",
            rotation:"0 90 0"
-         })
-       );
+         });
 
        //timeout and remove the first question block and replace with the first objective.
        setTimeout(function(){
          $("#startInfoText").remove();
-         scene.append($(document.createElement("a-image"))
+         $("#getGoingText")
            .attr({
-             id:"getGoingText",
-             src:"#getGoing",
+             visible:"true",
              scale: "2.5 1.5 1.5",
              position:"-2.83 2.1 -0.04",
              rotation:"0 90 0"
-           })
-         );
+           });
        }, 4000);
        //remove click Event
        setTimeout(function(){
          $("#getGoingText").remove();
-         scene.append($(document.createElement("a-image"))
+         $("#lightsHintText")
            .attr({
-             id:"lightsHintText",
-             src:"#lightsHint",
+             visible:"true",
              scale: "2.5 1.5 1.5",
              position:"-2.83 2.1 -0.04",
              rotation:"0 90 0"
-           })
-         );
+           });
        }, 8000);
        //remove the second questionBlock
        setTimeout(function(){
@@ -354,7 +345,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
         // means that the original textboxes go and only the final message is
         // displayed in the text box from this point
         if ($("#questionBlock").hasClass("moreClicks")){
-           questionBlockFunction("changeColorsText","#changeColors");
+           questionBlockFunction("changeColorsText");
          }
       },13000);
        // remove the animation attribute and the questionBlock sound when clicked
