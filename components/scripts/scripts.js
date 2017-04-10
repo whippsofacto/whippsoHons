@@ -62,6 +62,23 @@ questionBlockFunction = function(attId,attSrc){
 } // end of if statement
 
 
+//Ring Function
+ring = function(){
+$("#questionBlock").append($(document.createElement("a-ring"))
+  .attr({
+    id: "circle",
+    "radius-inner": "1.4",
+    "radius-outer": "1.5",
+    position:"-0.01 0.39 -1.25",
+    material:"color: yellow",
+    sound:"autoplay: on; loop: true; src: #block-alert; volume: 0.8; poolSize: 2",
+    "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
+    //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+    })
+  );
+}
+
+
 //Changing the block colors
 //passes the three box elements [targer],[otherBox1],[otherBox2]
 toggleFunction = function(element,otherBox,anotherBox){
@@ -118,10 +135,11 @@ toggleFunction = function(element,otherBox,anotherBox){
                 //removeElementsFromDom
                 setTimeout(function(){
                   $(element).removeAttr("animation__scaleDown");
-                  $("#trafficLights").remove()
+                  $("#trafficLights").remove();
                   questionBlockFunction("moreSwitchesText","#moreSwitches");
-                  $("#questionBlock").addClass("secondTest")
-                  setTimeout(timeoutVar,3000);
+                  $("#questionBlock").addClass("secondTest");
+                  //add Circle after 4 seconds
+                  var timeoutVar = setTimeout(function(){ring()},4000);//end of circle timeout
                 },3000);
               }
               //if the green glass does not exceed 2 elements -- continue clicking
@@ -132,8 +150,6 @@ toggleFunction = function(element,otherBox,anotherBox){
        });
   });
 }
-
-
 
 //--- Opening State ----------------------------------------//
 //-- Show signs to inform user of how to interact with the environment --//
@@ -268,20 +284,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
 
 
        //add Circle after 4 seconds
-       var timeoutVar = setTimeout(function(){
-       $("#questionBlock").append($(document.createElement("a-ring"))
-         .attr({
-           id: "circle",
-           "radius-inner": "1.4",
-           "radius-outer": "1.5",
-           position:"-0.01 0.39 -1.25",
-           material:"color: yellow",
-           sound:"autoplay: on; loop: true; src: #block-alert; volume: 0.8; poolSize: 2",
-           "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
-           //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
-           })
-         );
-        },5000);//end of circle timeout
+       var timeoutVar = setTimeout(function(){ring()},4000);//end of circle timeout
 
 
      //--- Question Block Click Event -------------------------//
