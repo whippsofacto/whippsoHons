@@ -688,7 +688,7 @@ if (screen.width < 750){
                         })
                       );
                //Add the box-toggle function
-               toggleFunction($("#leftBox",$("#rightBox"),$("#middleBox")));
+               toggleFunction($("#leftBox"),$("#rightBox"),$("#middleBox"));
 
               // Create the lighting for the Box above as a child element
               $('#trafficLights').append($(document.createElement("a-entity"))
