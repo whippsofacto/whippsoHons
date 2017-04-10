@@ -17,47 +17,69 @@ AFRAME.registerComponent('foo', {
     var nestedEntity = $(document.createElement('a-entity'));
     var sky = $('#sky');
 
-
-    var yesBtn = $(document.createElement('a-plane'));
-    var noBtn = $(document.createElement('a-plane'));
-
-
 //Functions -------------------------------------------//
 
 //Changing the block colors
+//passes the three box elements [targer],[otherBox1],[otherBox2]
 toggleFunction = function(element,otherBox,anotherBox){
   $(element).click(function(){
+    //on first click change the color to yellow
      console.log("color change");
+     //removeClass green if added from previous iteration
+     if ($(this).hasClass("green")){
      $(element).removeClass("green");
+     }
+     //change the color to yellow
      $(element).removeAttr("color");
      $(element).attr({
       material: "color: yellow"
     })
+    //remove the preivous click event
     $(element).off();
+    //add a class of yellow
     $(element).addClass("yellow");
+        //on second click
         $(element).click(function(){
+          //change color to red
           $(element).removeAttr("color");
           $(element).attr({
            material: "color: red"
          })
+         //remove the previous click event
          $(element).off();
+         //remove the yellow class
          $(element).removeClass("yellow");
+         //replace with red class
          $(element).addClass("red");
+              //on third click
              $(element).click(function(){
+               //change the color to green
                $(element).removeAttr("color");
                $(element).attr({
                 material: "color: green"
               })
+              //remove the previous click event
               $(element).off();
+              //change class from red
               $(element).removeClass("red");
+              //to green
               $(element).addClass("green");
-
+              //if the green class exceeds 2 elements -- initiate next puzzle
               if ($(".green").length > 2){
-                alert("greater!")
-                $(element).off();
-                    } else {
-                      toggleFunction(element,otherBox,anotherBox);
-                    }
+                //remove click events from all elements when all blocks are green
+                $("#trafficLights").attr({
+                  animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 1.5 0 1.5",
+                  sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2"
+                })
+                //removeElementsFromDom
+                setTimeout(function(){
+                  $("#trafficLights").remove()
+                },2000);
+              }
+              //if the green glass does not exceed 2 elements -- continue clicking
+              else {
+                toggleFunction(element,otherBox,anotherBox);
+              }
             });
        });
   });
@@ -313,54 +335,67 @@ if (screen.width < 750){
          //--Beginning of Code Block that brings about the yellow box ------------------------------------------//
          if ($("#questionBlock").hasClass("moreClicks")){
 
-         //Create the Box -- yellow, right of starting point. --*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--//
-          scene.append($(document.createElement("a-entity"))
-          .attr({
-            id:"trafficLights"
-          })
-        );
+           //Create the Box -- yellow, right of starting point. --*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--//
+            scene.append($(document.createElement("a-entity"))
+            .attr({
+              id:"trafficLights"
+            })
+          );
+           //Create the right facing box
+           $("#trafficLights").append($(document.createElement("a-entity"))
+                       .attr({
+                                id:"rightBox",
+                                geometry:"primative: box",
+                                material:"color: blue",
+                                position:" 10.83 2 2",
+                                scale:"0 0 0",
+                                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
+                     })
+                   );
 
-         $("#trafficLights").append($(document.createElement("a-entity"))
-                     .attr({
-                              id:"rightBox",
-                              geometry:"primative: box",
-                              material:"color: yellow",
-                              position:" 10.83 2 0.41",
-                              scale:"0 0 0",
-                              animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
-                   })
-                 );
+         //Add the box-toggle function
+         toggleFunction($("#rightBox"),$("#middleBox"),$("#leftBox"));
+
+         //Create the middle Box
          $("#trafficLights").append($(document.createElement("a-entity"))
                      .attr({
                               id:"middleBox",
                               geometry:"primative: box",
-                              material:"color: yellow",
-                              position:" 10.83 2 0.41",
+                              material:"color: orange",
+                              position:" 10.83 2 0",
                               scale:"0 0 0",
-                              animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
+                              animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
                    })
                  );
+         //Add the box-toggle function
+         toggleFunction($("#middleBox"),$("#leftBox"),$("#rightBox"));
+         //Create the left box
          $("#trafficLights").append($(document.createElement("a-entity"))
                      .attr({
                               id:"leftBox",
                               geometry:"primative: box",
-                              material:"color: yellow",
-                              position:" 10.83 2 0.41",
+                              material:"color: tomato",
+                              position:" 10.83 2 -2",
                               scale:"0 0 0",
-                              animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
+                              animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
                    })
                  );
-           // Create the lighting for the Box above as a child element
-           $('#trafficLights').append($(document.createElement("a-entity"))
-                             .attr({
-                                         id:"spotBox",
-                                         light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-                                         position:"-3.02 -0.03 -0.12",
-                                         rotation:"35.58 -87.94 0",
-                                         animation__lightsUp: "property: light.intensity; dir: normal; dur: 12000; easing: easeInSine; loop: false; from: 0; to: 0.88"
-                                           })
-                                         );
-            $('#trafficLights').one("click",function() {
+          //Add the box-toggle function
+          toggleFunction($("#leftBox"),$("#rightBox"),$("#middleBox"));
+
+         // Create the lighting for the Box above as a child element
+         $('#trafficLights').append($(document.createElement("a-entity"))
+                           .attr({
+                                       id:"spotBox",
+                                       light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                                       position:"-3.02 -0.03 -0.12",
+                                       rotation:"35.58 -87.94 0",
+                                       animation__lightsUp: "property: light.intensity; dir: normal; dur: 4000; easing: easeInSine; loop: false; from: 0; to: 0.88"
+                                         })
+                                       );
+
+  /*
+              $('#trafficLights').one("click",function() {
               console.log("ello box");
               scene.append(movingBox);
               movingBox.attr({
@@ -473,6 +508,7 @@ if (screen.width < 750){
                },12000);
            });
          });
+  */       
        } //--end of code block that brings about the yellow bock to start the experience ----------------------------------//
 
      },500);// end of add sound to hidden entity
@@ -653,7 +689,7 @@ if (screen.width < 750){
                             .attr({
                                      id:"rightBox",
                                      geometry:"primative: box",
-                                     material:"color: green",
+                                     material:"color: blue",
                                      position:" 10.83 2 2",
                                      scale:"0 0 0",
                                      animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
@@ -700,7 +736,6 @@ if (screen.width < 750){
                                             animation__lightsUp: "property: light.intensity; dir: normal; dur: 4000; easing: easeInSine; loop: false; from: 0; to: 0.88"
                                               })
                                             );
-
 
 
 
