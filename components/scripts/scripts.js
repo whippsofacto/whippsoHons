@@ -21,6 +21,47 @@ AFRAME.registerComponent('foo', {
     var noBtn = $(document.createElement('a-plane'));
 
 
+//Functions -------------------------------------------//
+
+//Changing the block colors
+toggleFunction = function(element,otherBox,anotherBox){
+  $(element).click(function(){
+     console.log("color change");
+     $(element).removeClass("green");
+     $(element).removeAttr("color");
+     $(element).attr({
+      material: "color: yellow"
+    })
+    $(element).off();
+    $(element).addClass("yellow");
+        $(element).click(function(){
+          $(element).removeAttr("color");
+          $(element).attr({
+           material: "color: red"
+         })
+         $(element).off();
+         $(element).removeClass("yellow");
+         $(element).addClass("red");
+             $(element).click(function(){
+               $(element).removeAttr("color");
+               $(element).attr({
+                material: "color: green"
+              })
+              $(element).off();
+              $(element).removeClass("red");
+              $(element).addClass("green");
+
+              if ($(".green").length > 2){
+                alert("greater!")
+                $(element).off();
+                    } else {
+                      toggleFunction(element,otherBox,anotherBox);
+                    }
+            });
+       });
+  });
+}
+
 //--- Opening State ----------------------------------------//
 //-- Show signs to inform user of how to interact with the environment --//
 //--If a mobile sized screen show the VR Info
@@ -268,6 +309,171 @@ if (screen.width < 750){
          $("#questionBlock").removeAttr("animation__bump");
          $("#questionBlock").addClass("moreClicks");
          //alert("removed");
+         //--Beginning of Code Block that brings about the yellow box ------------------------------------------//
+         if ($("#questionBlock").hasClass("moreClicks")){
+
+         //Create the Box -- yellow, right of starting point. --*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--//
+          scene.append($(document.createElement("a-entity"))
+          .attr({
+            id:"trafficLights"
+          })
+        );
+
+         $("#trafficLights").append($(document.createElement("a-entity"))
+                     .attr({
+                              id:"rightBox",
+                              geometry:"primative: box",
+                              material:"color: yellow",
+                              position:" 10.83 2 0.41",
+                              scale:"0 0 0",
+                              animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
+                   })
+                 );
+         $("#trafficLights").append($(document.createElement("a-entity"))
+                     .attr({
+                              id:"middleBox",
+                              geometry:"primative: box",
+                              material:"color: yellow",
+                              position:" 10.83 2 0.41",
+                              scale:"0 0 0",
+                              animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
+                   })
+                 );
+         $("#trafficLights").append($(document.createElement("a-entity"))
+                     .attr({
+                              id:"leftBox",
+                              geometry:"primative: box",
+                              material:"color: yellow",
+                              position:" 10.83 2 0.41",
+                              scale:"0 0 0",
+                              animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
+                   })
+                 );
+           // Create the lighting for the Box above as a child element
+           $('#trafficLights').append($(document.createElement("a-entity"))
+                             .attr({
+                                         id:"spotBox",
+                                         light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                                         position:"-3.02 -0.03 -0.12",
+                                         rotation:"35.58 -87.94 0",
+                                         animation__lightsUp: "property: light.intensity; dir: normal; dur: 12000; easing: easeInSine; loop: false; from: 0; to: 0.88"
+                                           })
+                                         );
+            $('#trafficLights').one("click",function() {
+              console.log("ello box");
+              scene.append(movingBox);
+              movingBox.attr({
+                           id:"movingBox",
+                           geometry:"primative: box",
+                           position:" 7.68 2 10.33",
+                           sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
+                           scale:"0 0 0",
+                           animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
+                           animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -2.61 2 10.33"
+                     });
+              movingBox.append(movingLight);
+              movingLight.attr({
+                id:"movingLight",
+                light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                position:"-0.59 -0.03 -4.04",
+                rotation:"35.58 -178.19 0",
+                animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
+                animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+            });
+
+                //second box click function
+                movingBox.one("click",function() {
+                console.log("movingClick");
+                scene.append(hoverBox);
+                //Add 3rd Box
+                hoverBox.attr({ id:"hoverBox",
+                                geometry:"primative: box",
+                                position:" 6.24 7.50 0.18",
+                                sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",
+                                scale:"0 0 0",
+                                animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
+                             });
+                hoverBox.append(hoverLight);
+                //Add lighting to the 3rd Box
+                hoverLight.attr({
+                  light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                  position:"5.4 -0.03 -4.04",
+                  rotation:"21.77 -177.62 2.86",
+                  animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
+                  animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -0.59 -0.03 -4.04"
+                });
+                //Prompt
+                entity.attr({  id:"mustBeAnotherOneSomewhereText",
+                               "obj-model":"obj: #anotherOneSomewhere-obj; mtl: #anotherOneSomewhere-mtl",
+                               scale:"0.6 0.6 0.6",
+                               position:"0.3 2.26 -5.20",
+                               rotation:"90 0 0",
+                               animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"
+                           });
+                         });
+
+               //3rd Box Function ---------------------//
+               hoverBox.one("click",function() {
+                 //celebrate the lights coming on
+                 entity.attr({  id:"aziz",
+                                "obj-model":"obj: #aziz-obj; mtl: #aziz-mtl",
+                                scale:"0.6 0.6 0.6",
+                                position:"0.3 2.26 -5.20",
+                                rotation:"90 0 0",
+                                animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
+
+                 //sky animation
+                 sky.attr({
+                 animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 140 200 250",
+                 animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 172 233 237"});
+                 //lights ON!
+                 scene.append(light);
+                 light.attr({
+                 light:"type: ambient; color: #BBB"
+               });
+                 scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
+                 $('#signPost').removeAttr("visible");
+                 $('#signPost').attr({sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
+             });
+
+             $("#signPost").one("click",function(){
+               $("#bridge").removeAttr('visible');
+               //text
+               setTimeout(function(){
+                 entity.attr({  id:"bridgeOpenText",
+                                "obj-model":"obj: #bridgeOpen-obj; mtl: #bridgeOpen-mtl",
+                                scale:"0.6 0.6 0.6",
+                                position:"0.2 2.26 -5.52",
+                                rotation:"0 0 0"});
+
+               },3000);
+
+               setTimeout(function(){
+                 entity.attr({  id:"answerText",
+                  "obj-model":"obj: #answer-obj; mtl: #answer-mtl",
+                  scale:"0.6 0.6 0.6",
+                  position:"0.2 2.26 -6.20",
+                  rotation:"0 0 0"});
+                  $("#testBox").attr({ sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
+
+               },7000);
+
+               setTimeout(function(){
+              entity.attr({
+                            id:"riddleText",
+                            "obj-model":"obj: #riddle-obj; mtl: #riddle-mtl",
+                            scale:"0.6 0.6 0.6",
+                            position:"0.2 2.26 -7.20",
+                            rotation:"0 0 0"});
+
+               $("#testBox").one("click",function(){
+                $('#pads').removeAttr('visible');
+               });
+               },12000);
+           });
+         });
+       } //--end of code block that brings about the yellow bock to start the experience ----------------------------------//
+
      },500);// end of add sound to hidden entity
      });
    },700);//end of remove startup elements and add question block
@@ -382,332 +588,245 @@ if (screen.width < 750){
        $("#startInfoText").remove();
        $("#lightsHintText").remove();
 
-       // -- Removes the original click function and applies a new click function ---------------------------//
-       // means that the original textboxes go and only the final message is
-       // displayed in the text box from this point
-       if ($("#questionBlock").hasClass("moreClicks")){
-         $("#questionBlock").off();
-         //what happens after the first click ----------------------//
-         $("#questionBlock").click(function(){
-           //show the lights hint message
-           scene.append($(document.createElement("a-image"))
-             .attr({
-               id:"lightsHintText",
-               src:"#lightsHint",
-               scale: "2.5 1.5 1.5",
-               position:"-2.83 2.1 -0.04",
-               rotation:"0 90 0"
-             })
-           );
-           //add sound to hidden entity
-           $("#questionBlock").append($(document.createElement("a-entity"))
-             .attr({
-               id: "questionBlockSound",
-               sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
-               //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
-             })
-           );
-           setTimeout(function(){
-             $('#questionBlockSound')
-             .attr({
-              sound:"autoplay: on; loop: false; src: #close-box; volume: 3; poolSize: 2",
-            })
-            $("#lightsHintText")
-            .attr({
-              animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
-            })
-          },4000);
-           //after 4 seconds remove the lights Hint message
-           setTimeout(function(){
-           $("#lightsHintText").remove();
-           $('#questionBlockSound').remove();
-         }, 6000);
-         });
-       } // end of if statement
-     },13000);
-      // remove the animation attribute and the questionBlock sound when clicked
-      setTimeout( function () {
-        $('#questionBlockSound').remove();
-        $("#questionBlock").removeAttr("animation__bump");
-        $("#questionBlock").addClass("moreClicks");
-        //alert("removed");
-    },500);// end of add sound to hidden entity
-    });
-  },700);//end of remove startup elements and add question block
- });
-}
+             // -- Removes the original click function and applies a new click function ---------------------------//
+             // means that the original textboxes go and only the final message is
+             // displayed in the text box from this point
+             if ($("#questionBlock").hasClass("moreClicks")){
+               $("#questionBlock").off();
+               //what happens after the first click ----------------------//
+               $("#questionBlock").click(function(){
+                 //show the lights hint message
+                 scene.append($(document.createElement("a-image"))
+                   .attr({
+                     id:"changeColorsText",
+                     src:"#changeColors",
+                     scale: "2.5 1.5 1.5",
+                     position:"-2.83 2.1 -0.04",
+                     rotation:"0 90 0"
+                   })
+                 );
+                 //add sound to hidden entity
+                 $("#questionBlock").append($(document.createElement("a-entity"))
+                   .attr({
+                     id: "questionBlockSound",
+                     sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
+                     //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+                   })
+                 );
+                 setTimeout(function(){
+                   $('#questionBlockSound')
+                   .attr({
+                    sound:"autoplay: on; loop: false; src: #close-box; volume: 3; poolSize: 2",
+                  })
+                  $("#changeColorsText")
+                  .attr({
+                    animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
+                  })
+                },4000);
+                 //after 4 seconds remove the lights Hint message
+                 setTimeout(function(){
+                 $("#changeColorsText").remove();
+                 $('#questionBlockSound').remove();
+               }, 6000);
+               });
+             } // end of if statement
+           },13000);
+            // remove the animation attribute and the questionBlock sound when clicked
+            setTimeout( function () {
+              $('#questionBlockSound').remove();
+              $("#questionBlock").removeAttr("animation__bump");
+              $("#questionBlock").addClass("moreClicks");
+              //alert("removed");
+
+              //--Beginning of Code Block that brings about the yellow box ------------------------------------------//
+              if ($("#questionBlock").hasClass("moreClicks")){
+
+                //Create the Box -- yellow, right of starting point. --*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--//
+                 scene.append($(document.createElement("a-entity"))
+                 .attr({
+                   id:"trafficLights"
+                 })
+               );
+                //Create the right facing box
+                $("#trafficLights").append($(document.createElement("a-entity"))
+                            .attr({
+                                     id:"rightBox",
+                                     geometry:"primative: box",
+                                     material:"color: green",
+                                     position:" 10.83 2 2",
+                                     scale:"0 0 0",
+                                     animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
+                          })
+                        );
+
+              //Add the box-toggle function
+              toggleFunction($("#rightBox"),$("#middleBox"),$("#leftBox"));
+
+              //Create the middle Box
+              $("#trafficLights").append($(document.createElement("a-entity"))
+                          .attr({
+                                   id:"middleBox",
+                                   geometry:"primative: box",
+                                   material:"color: orange",
+                                   position:" 10.83 2 0",
+                                   scale:"0 0 0",
+                                   animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
+                        })
+                      );
+              //Add the box-toggle function
+              toggleFunction($("#middleBox"),$("#leftBox"),$("#rightBox"));
+              //Create the left box
+              $("#trafficLights").append($(document.createElement("a-entity"))
+                          .attr({
+                                   id:"leftBox",
+                                   geometry:"primative: box",
+                                   material:"color: tomato",
+                                   position:" 10.83 2 -2",
+                                   scale:"0 0 0",
+                                   animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
+                        })
+                      );
+               //Add the box-toggle function
+               toggleFunction($("#leftBox",$("#rightBox"),$("#middleBox")));
+
+              // Create the lighting for the Box above as a child element
+              $('#trafficLights').append($(document.createElement("a-entity"))
+                                .attr({
+                                            id:"spotBox",
+                                            light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                                            position:"-3.02 -0.03 -0.12",
+                                            rotation:"35.58 -87.94 0",
+                                            animation__lightsUp: "property: light.intensity; dir: normal; dur: 4000; easing: easeInSine; loop: false; from: 0; to: 0.88"
+                                              })
+                                            );
 
 
 
-
-
-
-
-
-//Create the Box -- yellow, right of starting point.
-scene.append($(document.createElement("a-entity"))
-            .attr({
-                     id:"lightBox",
-                     geometry:"primative: box",
-                     material:"color: yellow",
-                     position:" 10.83 2 0.41",
-                     scale:"0 0 0",
-                     animation__scale:"property: scale; dir: normal; dur: 12000; easing: easeInSine; loop: false; to: 1 1 1"
-          })
-        );
-  // Create the lighting for the Box above as a child element
-  $('#lightBox').append($(document.createElement("a-entity"))
-                    .attr({
-                                id:"spotBox",
-                                light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-                                position:"-3.02 -0.03 -0.12",
-                                rotation:"35.58 -87.94 0",
-                                animation__lightsUp: "property: light.intensity; dir: normal; dur: 12000; easing: easeInSine; loop: false; from: 0; to: 0.88"
-                                  })
-                                );
 
 
 /*
-    setTimeout(function(){
-      scene.append(entity);
-      entity.attr({  id:"lightsOnIntro",
-                     "obj-model":"obj: #lightsOnText-obj; mtl: #lightsOnText-mtl",
-                     scale:"0.6 0.6 0.6",
-                     position:"0.2 2.26 -3.20",
-                     rotation:"90 0 0"});
-   },9000);
-*/
-   $('#lightBox').one("click",function() {
-     console.log("ello box");
-     scene.append(movingBox);
-     movingBox.attr({
-                  id:"movingBox",
-                  geometry:"primative: box",
-                  position:" 7.68 2 10.33",
-                  sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
-                  scale:"0 0 0",
-                  animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
-                  animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -2.61 2 10.33"
-            });
-     movingBox.append(movingLight);
-     movingLight.attr({
-       id:"movingLight",
-       light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-       position:"-0.59 -0.03 -4.04",
-       rotation:"35.58 -178.19 0",
-       animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-       animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
-   });
+                   $('#trafficLights').one("click",function() {
+                   console.log("ello box");
+                   scene.append(movingBox);
+                   movingBox.attr({
+                                id:"movingBox",
+                                geometry:"primative: box",
+                                position:" 7.68 2 10.33",
+                                sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
+                                scale:"0 0 0",
+                                animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
+                                animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -2.61 2 10.33"
+                          });
+                   movingBox.append(movingLight);
+                   movingLight.attr({
+                     id:"movingLight",
+                     light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                     position:"-0.59 -0.03 -4.04",
+                     rotation:"35.58 -178.19 0",
+                     animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
+                     animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
+                 });
 
-       //second box click function
-       movingBox.one("click",function() {
-       console.log("movingClick");
-       scene.append(hoverBox);
-       //Add 3rd Box
-       hoverBox.attr({ id:"hoverBox",
-                       geometry:"primative: box",
-                       position:" 6.24 7.50 0.18",
-                       sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",
-                       scale:"0 0 0",
-                       animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
+                     //second box click function
+                     movingBox.one("click",function() {
+                     console.log("movingClick");
+                     scene.append(hoverBox);
+                     //Add 3rd Box
+                     hoverBox.attr({ id:"hoverBox",
+                                     geometry:"primative: box",
+                                     position:" 6.24 7.50 0.18",
+                                     sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",
+                                     scale:"0 0 0",
+                                     animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
+                                  });
+                     hoverBox.append(hoverLight);
+                     //Add lighting to the 3rd Box
+                     hoverLight.attr({
+                       light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                       position:"5.4 -0.03 -4.04",
+                       rotation:"21.77 -177.62 2.86",
+                       animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
+                       animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -0.59 -0.03 -4.04"
+                     });
+                     //Prompt
+                     entity.attr({  id:"mustBeAnotherOneSomewhereText",
+                                    "obj-model":"obj: #anotherOneSomewhere-obj; mtl: #anotherOneSomewhere-mtl",
+                                    scale:"0.6 0.6 0.6",
+                                    position:"0.3 2.26 -5.20",
+                                    rotation:"90 0 0",
+                                    animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"
+                                });
+                              });
+
+                    //3rd Box Function ---------------------//
+                    hoverBox.one("click",function() {
+                      //celebrate the lights coming on
+                      entity.attr({  id:"aziz",
+                                     "obj-model":"obj: #aziz-obj; mtl: #aziz-mtl",
+                                     scale:"0.6 0.6 0.6",
+                                     position:"0.3 2.26 -5.20",
+                                     rotation:"90 0 0",
+                                     animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
+
+                      //sky animation
+                      sky.attr({
+                      animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 140 200 250",
+                      animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 172 233 237"});
+                      //lights ON!
+                      scene.append(light);
+                      light.attr({
+                      light:"type: ambient; color: #BBB"
                     });
-       hoverBox.append(hoverLight);
-       //Add lighting to the 3rd Box
-       hoverLight.attr({
-         light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-         position:"5.4 -0.03 -4.04",
-         rotation:"21.77 -177.62 2.86",
-         animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-         animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -0.59 -0.03 -4.04"
-       });
-       //Prompt
-       entity.attr({  id:"mustBeAnotherOneSomewhereText",
-                      "obj-model":"obj: #anotherOneSomewhere-obj; mtl: #anotherOneSomewhere-mtl",
-                      scale:"0.6 0.6 0.6",
-                      position:"0.3 2.26 -5.20",
-                      rotation:"90 0 0",
-                      animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"
+                      scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
+                      $('#signPost').removeAttr("visible");
+                      $('#signPost').attr({sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
                   });
-                });
 
-      //3rd Box Function ---------------------//
-      hoverBox.one("click",function() {
-        //celebrate the lights coming on
-        entity.attr({  id:"aziz",
-                       "obj-model":"obj: #aziz-obj; mtl: #aziz-mtl",
+                  $("#signPost").one("click",function(){
+                    $("#bridge").removeAttr('visible');
+                    //text
+                    setTimeout(function(){
+                      entity.attr({  id:"bridgeOpenText",
+                                     "obj-model":"obj: #bridgeOpen-obj; mtl: #bridgeOpen-mtl",
+                                     scale:"0.6 0.6 0.6",
+                                     position:"0.2 2.26 -5.52",
+                                     rotation:"0 0 0"});
+
+                    },3000);
+
+                    setTimeout(function(){
+                      entity.attr({  id:"answerText",
+                       "obj-model":"obj: #answer-obj; mtl: #answer-mtl",
                        scale:"0.6 0.6 0.6",
-                       position:"0.3 2.26 -5.20",
-                       rotation:"90 0 0",
-                       animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
-
-        //sky animation
-        sky.attr({
-        animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 140 200 250",
-        animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 172 233 237"});
-        //lights ON!
-        scene.append(light);
-        light.attr({
-        light:"type: ambient; color: #BBB"
-      });
-        scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
-        $('#signPost').removeAttr("visible");
-        $('#signPost').attr({sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
-      /*  $('#signPost').one("click",function(){
-          entity.attr({"obj-model": "obj: #warning-obj; mtl: #warning-mtl",
-                           id:"warnText" ,
-                           position:"3.72 2.49 -1.55",
-                           rotation:" 0 -136.94 -89.95",
-                           animation__explode:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.6 0.6 0.6"
-
-          })
-          setTimeout(function () {
-            $('#clown-img').attr({
-            visible:"true",
-            sound:"autoplay: true; volume: 0.04; loop:false; src: #scream"});
-          }, 2000);
-
-          setTimeout(function(){
-            $('#clown-img').attr({
-            visible:"false"
-          });
-          entity.attr({   id: "frightQuestion",
-                          "obj-model": "obj: #fright-obj; mtl: #fright-mtl",
-                          scale:"0.6 0.6 0.6",
-                          position:"-0.89 2.26 -5.20",
-                          rotation:"90 90 90",
-          })
-          entity.append(yesBtn);
-          yesBtn.attr({
-              id: "yesBtn",
-              scale: "1.5 1.5 1.5",
-              rotation:" -81.36 -37.24 126.05",
-              position:"-2 2 0.5",
-              material: "color: #1BEDC3",
-              animation__conescale:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.4 0.4 0.4"});
-          entity.append(noBtn);
-              noBtn.attr({
-                  id: "noBtn",
-                  scale: "0.7 0.7 0.7",
-                  rotation:" -59.59 76.20 10.31",
-                  position:"-3.38 0.5 0.5",
-                  animation__conescale:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.4 0.4 0.4"});
-        },5000)
-
-
-
-        });
-*/
-    });
-
-    $("#signPost").one("click",function(){
-      $("#bridge").removeAttr('visible');
-      //text
-      setTimeout(function(){
-        entity.attr({  id:"bridgeOpenText",
-                       "obj-model":"obj: #bridgeOpen-obj; mtl: #bridgeOpen-mtl",
-                       scale:"0.6 0.6 0.6",
-                       position:"0.2 2.26 -5.52",
+                       position:"0.2 2.26 -6.20",
                        rotation:"0 0 0"});
+                       $("#testBox").attr({ sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
 
-      },3000);
+                    },7000);
 
-      setTimeout(function(){
-        entity.attr({  id:"answerText",
-         "obj-model":"obj: #answer-obj; mtl: #answer-mtl",
-         scale:"0.6 0.6 0.6",
-         position:"0.2 2.26 -6.20",
-         rotation:"0 0 0"});
-         $("#testBox").attr({ sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
+                    setTimeout(function(){
+                   entity.attr({
+                                 id:"riddleText",
+                                 "obj-model":"obj: #riddle-obj; mtl: #riddle-mtl",
+                                 scale:"0.6 0.6 0.6",
+                                 position:"0.2 2.26 -7.20",
+                                 rotation:"0 0 0"});
 
-      },7000);
-
-      setTimeout(function(){
-     entity.attr({
-                   id:"riddleText",
-                   "obj-model":"obj: #riddle-obj; mtl: #riddle-mtl",
-                   scale:"0.6 0.6 0.6",
-                   position:"0.2 2.26 -7.20",
-                   rotation:"0 0 0"});
-
-      $("#testBox").one("click",function(){
-       $('#pads').removeAttr('visible');
-      });
-      },12000);
-  });
+                    $("#testBox").one("click",function(){
+                     $('#pads').removeAttr('visible');
+                    });
+                    },12000);
+                });
+              });*/
+            } //--end of code block that brings about the yellow bock to start the experience ----------------------------------//
 
 
-  });
-
-    /*
-    //--- Animations Testing ---//
-    $('#testBox').click(function() {
-    if ($('#myBox').hasClass('test')) {
-        $('#myBox').attr({scale:"0 0 0",
-                          visible:"false"});
-        $('#myBox1').attr('scale',"1.5 1.5 1.5");
-        $('#myBox2').attr({position:"-0.91 0.5 -14.5",
-                           scale: "3 3 3",
-                           geometry: "primitive: cylinder",
-                           animation__thing:"property: scale; dir: normal; dur: 5000; easing: easeInSine; loop: false; to: 4 4 4"});
-        $('#myBox').removeClass('test');
-        $('#myBox2').removeAttr('animation__scale');
-    } else {
-      $('#myBox').attr('scale',"1 1 1");
-      $('#myBox').addClass('test');
-      $('#myBox1').attr('scale',"1 1 1");
-      $('#myBox2').attr( {position:"-4.0 1.26 -4.7",
-                          geometry:"primitive: box",
-                          animation__scale:"property: scale; dir: normal; dur: 5000; easing: easeInSine; loop: false; to: 0 0 0"});
-      $('#myBox2').removeAttr('animation__thing');
-       }
-    });
-
-    //--Adding Elements On Click --//
-    //.one means that the event can only fire once
-    $('#myBox').one("click", function() {
-      console.log("clicked");
-      scene.append(entity);
-      entity.attr({    "obj-model": "obj: #speech-obj; mtl: #speech-mtl",
-                       position:"-1.36 2.49 -2.37",
-                       scale:"0 0 0",
-                       rotation:" 90 25 0",
-                       animation__conescale:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.4 0.4 0.4"});
-     scene.append(yesBtn);
-     yesBtn.attr({
-         id: "yesBtn",
-         scale: "0.5 0.5 0.5",
-         rotation:" 0 25 0",
-         position:"-0.52 1.66 -2.78",
-         material: "color: #1BEDC3",
-         animation__conescale:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.4 0.4 0.4"});
-     yesBtn.one("click",function(){
-          console.log("yes!");
-          yesBtn.attr({animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 0 0 0",
-                       animation__rotate:"property: rotation; dir: normal; dur: 300; easing: easeInOutSine; loop:true; from: 0 0 0; to: 0 0 1080"
-              });
-          setTimeout(function(){
-                      $(yesBtn).remove();
-                      alert("removed");
-                    },2200);
-          });
-     scene.append(noBtn);
-     noBtn.attr({
-         id: "noBtn",
-         scale: "0.5 0.5 0.5",
-         rotation:" 0 25 0",
-         position:"-1.91 1.66 -2.10",
-         animation__conescale:"property: scale; dir: normal; dur: 200; easing: easeInSine; loop: false; from: 0 0 0; to: 0.4 0.4 0.4"});
-     noBtn.one("click",function(){
-          console.log("no!");
-          setTimeout(function(){
-                      $(noBtn).remove();
-                      alert("removed");
-                    },300);
+          },500);// end of add sound to hidden entity
         });
-    });
+      },700);//end of remove startup elements and add question block
+     });
+    }
 
-*/
 
-
-  }
-});
+  }//end if init function ------------------//
+});//end of "foo" component ----------------//
