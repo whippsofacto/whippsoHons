@@ -21,7 +21,7 @@ AFRAME.registerComponent('foo', {
 //QuestionBlockFunction
 //Changes the message that's inside the quesiton block -- function contains the animation, sound and text
 //Takes the params of an ID for the element and the Src of the image.
-questionBlockFunction = function(attId){
+questionBlockFunction = function(attId,srcId){
   $("#questionBlock").off();
   //what happens after the first click ----------------------//
   $("#questionBlock").click(function(){
@@ -37,14 +37,14 @@ questionBlockFunction = function(attId){
     $("#questionBlock").append($(document.createElement("a-entity"))
       .attr({
         id: "questionBlockSound",
-        sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
+        sound:"autoplay: on; loop: false; src: #box-sound; volume: 5; poolSize: 2",
         //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
       })
     );
     setTimeout(function(){
       $('#questionBlockSound')
       .attr({
-       sound:"autoplay: on; loop: false; src: #close-box; volume: 3; poolSize: 2",
+       sound:"autoplay: on; loop: false; src: #close-box; volume: 5; poolSize: 2",
      })
      $("#" + attId)
      .attr({
@@ -55,7 +55,20 @@ questionBlockFunction = function(attId){
     setTimeout(function(){
     $("#" + attId).remove();
     $('#questionBlockSound').remove();
-  }, 6000);
+        scene.append($(document.createElement("a-image"))
+          .attr({
+            id:  attId,
+            src: srcId,
+            visible: "false",
+            scale: "2.5 1.5 1.5",
+            position:"-2.83 2.1 -0.04",
+            rotation:"90 0 0"
+
+            //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+          })
+        );
+
+  }, 4700);
   });
 } // end of if statement
 
@@ -69,7 +82,7 @@ $("#questionBlock").append($(document.createElement("a-ring"))
     "radius-outer": "1.5",
     position:"-0.01 0.39 -1.25",
     material:"color: yellow",
-    sound:"autoplay: on; loop: true; src: #block-alert; volume: 0.8; poolSize: 2",
+    sound:"autoplay: on; loop: true; src: #block-alert; volume: 5; poolSize: 2",
     "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
     //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
     })
@@ -127,18 +140,116 @@ toggleFunction = function(element,otherBox,anotherBox){
                 //remove click events from all elements when all blocks are green
                 $("#trafficLights").attr({
                   animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 1.5 0 1.5",
-                  sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2"
+                  sound:"autoplay: on; loop: false; src: #success; volume: 1; poolSize: 2"
                 })
-                $("#questionblock").empty()
+                //brighten up the sky
+                sky.attr({
+                animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 50 40 84",
+                animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 148 51 48"
+              });
+              //change fog to red
+              scene.attr({animation__fog:"property: fog.color; dir: normal; dur: 6000; easing: easeInSine; loop: false; to:#faa0a2 "});
+              //fog #faa0a2
+                $("#questionBlock").addClass("nextClicks")
                 //removeElementsFromDom
                 setTimeout(function(){
                   $(element).removeAttr("animation__scaleDown");
                   $("#trafficLights").remove();
-                  questionBlockFunction("moreSwitchesText");
-                  $("#questionBlock").addClass("secondTest");
+                  questionBlockFunction("moreSwitchesText","#moreSwitches");
                   //add Circle after 4 seconds
                   var timeoutVar = setTimeout(function(){ring()},4000);//end of circle timeout
-                },3000);
+                      $("#questionBlock").click(function(){
+                      //onNextClickEventRemoveTheRing
+                      clearTimeout(timeoutVar);
+                      //if ring is added it should be removed
+                      $("#circle").remove();
+                      //Create the Box -- yellow, right of starting point. --*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--//
+                       if ($("#questionBlock").hasClass("nextClicks")){
+                              scene.append($(document.createElement("a-entity"))
+                              .attr({
+                                id:"movingLights"
+                              })
+                            );
+                            $("#movingLights").append($(document.createElement("a-image"))
+                                        .attr({
+                                                id:"colourBoxesText",
+                                                src: "#colourBoxes",
+                                                position:" 11.20 4.38 0",
+                                                rotation:"0 90 0",
+                                                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 5 2.5 2.5"
+                                              })
+                            );
+                            $("#movingLights").append($(document.createElement("a-entity"))
+                                        .attr({id:"boxUp",
+                                               geometry:"primative: box",
+                                               material:"color: #eeff00",
+                                               position:" 0.17 8.52 -5",
+                                               scale:"0 0 0",
+                                               animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
+                                              })
+                            );
+                            $("#boxUp").append($(document.createElement("a-entity"))
+                            .attr({
+                              id:"boxUpLight",
+                              light:"color: #fff; angle 60 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                              position:"0 -3.5 2.25",
+                              rotation:"60 0 0",
+                              animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+                            })
+                          );
+
+                          //red: #ff0d08
+                          //orange: ##eeff00
+                          //green: #00ff75
+                            $("#movingLights").append($(document.createElement("a-entity"))
+                                        .attr({id:"boxBack",
+                                               geometry:"primative: box",
+                                               material:"color: #ff0d08",
+                                               position:"0 2.5 8",
+                                               scale:"0 0 0",
+                                               animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 2 2 2",
+                                               animation__move:"property: position; dir: alternate; dur: 4000; easing: easeInSine; loop: true; to: -10 2.5 8"
+
+                                              })
+                            );
+                            $("#boxBack").append($(document.createElement("a-entity"))
+                            .attr({
+                              id:"boxBackLight",
+                              light:"color: #fff; angle: 20; intensity:0.8; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                              position:"0 0 -3.5",
+                              rotation:"-0.5 180 0",
+                              animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
+                            })
+                          );
+                            $("#movingLights").append($(document.createElement("a-entity"))
+                                        .attr({id:"boxSign",
+                                               geometry:"primative: box",
+                                               material:"color: #00ff75",
+                                               position:" 14 2 0",
+                                               scale:"0 0 0",
+                                               animation__scale:"property: scale; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 3 3 3",
+                                               animation__move:"property: position; dir: alternate; dur: 4000; easing: easeInSine; loop: true; to: 14 14 0"
+                                              })
+                            );
+                            $("#boxSign").append($(document.createElement("a-entity"))
+                            .attr({
+                              id:"boxSignLight",
+                              light:"color: #fff; angle:20; intensity:0.8; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+                              position:"-9 0 0",
+                              rotation:"7.5 -90 0.5",
+                              animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
+                              animation__move:"property: position; dir: alternate; dur: 4000; easing: easeInSine; loop: true; to: 0 0 0"
+
+                            })
+                          );
+
+                            $("#questionBlock").removeClass("nextClicks"); //remove the class that creates the next round of elements so as it can only occur once.
+
+
+                      } //end of IF statement
+                   })
+
+                },7000);
               }
               //if the green glass does not exceed 2 elements -- continue clicking
               else {
@@ -301,7 +412,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
        $("#questionBlock").append($(document.createElement("a-entity"))
          .attr({
            id: "questionBlockSound",
-           sound:"autoplay: on; loop: false; src: #box-sound; volume: 3; poolSize: 2",
+           sound:"autoplay: on; loop: false; src: #box-sound; volume: 6; poolSize: 2",
            //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
          })
        );
@@ -346,7 +457,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
         // means that the original textboxes go and only the final message is
         // displayed in the text box from this point
         if ($("#questionBlock").hasClass("moreClicks")){
-           questionBlockFunction("changeColorsText");
+           questionBlockFunction("changeColorsText","#changeColors");
          }
       },13000);
        // remove the animation attribute and the questionBlock sound when clicked
@@ -366,13 +477,12 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
           );
           $("#trafficLights").append($(document.createElement("a-image"))
                       .attr({
-                        id:"greenBoxesText",
-                        src:"#greenBoxes",
-                        scale: "0 0 0",
-                        position:" 11.20 4.38 0",
-                        rotation:"0 90 0",
-                        animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 5 2.5 2.5"
-                     })
+                               id:"greenBoxesText",
+                               src: "#greenBoxes",
+                               position:" 11.20 4.38 0",
+                               rotation:"0 90 0",
+                               animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 5 2.5 2.5"
+                             })
                   );
            //Create the right facing box
            $("#trafficLights").append($(document.createElement("a-entity"))
@@ -426,6 +536,9 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
                                        animation__lightsUp: "property: light.intensity; dir: normal; dur: 4000; easing: easeInSine; loop: false; from: 0; to: 0.88"
                                          })
                                        );
+
+
+
 // --- End of the first puzzle -----------------------------------------------------------------------------------------------------------------//
 
   /*
