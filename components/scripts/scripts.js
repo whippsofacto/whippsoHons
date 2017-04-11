@@ -69,7 +69,7 @@ questionBlockFunction = function(attId,srcId){
 
   }, 4700);
   });
-} // end of if statement
+} // end of function
 
 
 //Ring Function
@@ -81,97 +81,218 @@ $("#questionBlock").append($(document.createElement("a-ring"))
     "radius-outer": "1.5",
     position:"-0.01 0.39 -1.25",
     material:"color: yellow",
-    sound:"autoplay: on; loop: true; src: #block-alert; volume: 5; poolSize: 2",
+    sound:"autoplay: on; loop: true; src: #block-alert; volume: 3; poolSize: 2",
     "animation__scale-inner-radius":"property: scale; dir: normal; dur: 1000; easing: easeInSine; loop:true; to: 0.35 0.35 0.35",
     //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
     })
   );
 }
 
-movingPuzzle = function (e,o,a){
-  $(e).click(function(){
-    //on first click change the color to yellow
-     console.log("moving puzzle state");
-     //removeClass green if added from previous iteration
-     if ($(this).hasClass("green")){
-     $(e).removeClass("green");
-     }
-     //change the color to yellow
-     $(e).removeAttr("color");
-     $(e).attr({
-      material: "color: yellow"
-    })
-    //remove the preivous click event
-    $(e).off();
-    //add a class of yellow
-    $(e).addClass("yellow");
-        //on second click
-        $(e).click(function(){
-          //change color to red
-          $(e).removeAttr("color");
-          $(e).attr({
-           material: "color: red"
-         })
-         //remove the previous click event
-         $(e).off();
-         //remove the yellow class
-         $(e).removeClass("yellow");
-         //replace with red class
-         $(e).addClass("red");
-              //on third click
-             $(e).click(function(){
-               //change the color to green
-               $(e).removeAttr("color");
-               $(e).attr({
-                material: "color: green"
-              })
-              //remove the previous click event
-              $(e).off();
-              //change class from red
-              $(e).removeClass("red");
-              //to green
-              $(e).addClass("green");
-              //if the green class exceeds 2 elements -- initiate next puzzle
-              if ($(".yellow").length == 1 &&
-                  $(".red").length == 1 &&
-                  $(".green").length == 1){
-                //remove click events from all elements when all blocks are green
-                $("#movingLights").attr({
-                  animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 1.5 0 1.5",
-                  sound:"autoplay: on; loop: false; src: #success; volume: 1; poolSize: 2"
-                })
-                sky.removeAttr("animation__top");
-                sky.removeAttr("animation__bottom");
-                scene.removeAttr("animation__fog");
-                //brighten up the sky
-                sky.attr({
-                animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 43 165 166",
-                animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 252 141 41"
-              });
-              //change fog to orange
-              scene.attr({animation__fog:"property: fog.color; dir: normal; dur: 6000; easing: easeInSine; loop: false; to:#a3fac1"});
 
-              //fog #faa0a2
-                //$("#questionBlock").addClass("nextClicks")
-                //removeElementsFromDom
-                setTimeout(function(){
-                  $(e).removeAttr("animation__scaleDown");
-                  $("#movingLights").remove();
-                  //questionBlockFunction("moreSwitchesText","#moreSwitches");
-                  //add Circle after 4 seconds
-                  //var timeoutVar = setTimeout(function(){ring()},4000);//end of circle timeout
-                },5000);
-        } else {
-          movingPuzzle(e,o,a);
-        }
-    });
+//----- Bring about the bridge and final transition ------//
+finalFunction = function (){
+  $("#movingLights").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 1.5 0 1.5",
+    sound:"autoplay: on; loop: false; src: #success; volume: 0.5; poolSize: 2"
+  })
+  //brighten up the sky
+  sky.removeAttr("animation__top");
+  sky.removeAttr("animation__bottom");
+  sky.attr({
+  animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 36 40 198",
+  animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 252 141 41"
   });
+  //change fog to orange
+  scene.removeAttr("animation__fog");
+  scene.attr({animation__fog:"property: fog.color; dir: normal; dur: 6000; easing: easeInSine; loop: false; to:#4E2A73"});
+  //fog #faa0a2
+  //lighting
+  scene.append($(document.createElement("a-entity"))
+  .attr({
+    id:"ambientLight",
+    light:"angle: 10; color: #ff9dff; intensity: 0; type: ambient",
+    animation__intensity:"property: light.intensity; dir: normal; dur: 15000; easing: easeInSine; loop: false; to: 0.4",
+   })
+  );
+  //clear out old questionBoxStuff
+  $("#questionBlock").removeClass("moreClicks");
+  //new RING alert
+  var timeoutVar = setTimeout(function(){ring(),$("#trafficLights").remove();},6000);//end of circle timeout
+  $("#questionBlock").click(function(){
+    //after the click has run once only show the questionBlock for "openBridge"
+    if ($("#questionBlock").hasClass("openBridge")){
+      questionBlockFunction("openBridgeText","#openBridge");
+    }
+    //only run the first time clicked
+    else {
+    //clear the timeout/remove the ring
+    $("#moreSwitchesText").remove();
+    $("#movingLights").remove();
+    clearTimeout(timeoutVar);
+    //if ring is added it should be removed
+    $("#circle").remove();
+    $("#goodJobText")
+      .attr({
+        visible: "true",
+        scale: "2.5 1.5 1.5",
+        position:"-2.83 2.1 -0.04",
+        rotation:"0 90 0"
+      });
+
+    //timeout and remove the first question block and replace with the first objective.
+    setTimeout(function(){
+      $("#goodJobText").remove();
+      $("#openBridgeText")
+        .attr({
+          visible:"true",
+          scale: "2.5 1.5 1.5",
+          position:"-2.83 2.1 -0.04",
+          rotation:"0 90 0"
+        });
+    }, 4000);
+
+    setTimeout(function(){
+      $("#questionBlock").addClass("openBridge");
+      $('#questionBlockSound')
+      .attr({
+       sound:"autoplay: on; loop: false; src: #close-box; volume: 5; poolSize: 2",
+     })
+     $("#openBridgeText")
+     .attr({
+       animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
+     })
+    },8000);
+    setTimeout(function(){
+      $('#questionBlockSound').remove();
+    },11000)
+  }
+});
+  //reveal bridge
+  $("#bridge").removeAttr("visible");
+  //add the walking panels
+  $('.firstBridge').removeAttr('visible');
+//QuestionBlock Light
+$("#questionBlockLight").attr({
+  animation__qbUP:"property: light.intensity; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 0.20",
+  animation__qbColor:"property: light.color; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: #e1ff6a",
+  animation__qbPosition:"property: position; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 0 -0.03 5"
+})
+}//End of finalFunction
+
+movingPuzzle = function (boxUp,boxBack,boxSign){
+  var colors = [];
+
+  $(boxUp).click(function(){
+    console.log("BoxUp");
+         //on second click
+         //change color to red
+         $(boxUp).removeAttr("color");
+         $(boxUp).attr({
+          material: "color: purple"
+        })
+        //remove the previous click event
+        $(boxUp).off();
+        //replace with red class
+        $(boxUp).addClass("purple");
+             //on third click
+            $(boxUp).click(function(){
+              //change the color to green
+              $(boxUp).removeAttr("color");
+              $(boxUp).attr({
+               material: "color: yellow"
+             })
+             //remove the previous click event
+             $(boxUp).off();
+             //change class from red
+             $(boxUp).removeClass("purple");
+             //to green
+             $(boxUp).addClass("yellow");
+             if($(this).hasClass("yellow")){
+                $(boxUp).off();
+                colors.push("yellow");
+                console.log(colors);
+                if (colors.length > 2){
+                finalFunction();
+                }
+
+      }
+  });
+ }); //boxUp
+ $(boxBack).click(function(){
+   console.log("boxBack");
+        //on second click
+        //change color to red
+        $(boxBack).removeAttr("color");
+        $(boxBack).attr({
+         material: "color: yellow"
+       })
+       //remove the previous click event
+       $(boxBack).off();
+       //replace with red class
+       $(boxBack).addClass("yellow");
+            //on third click
+           $(boxBack).click(function(){
+             //change the color to green
+             $(boxBack).removeAttr("color");
+             $(boxBack).attr({
+              material: "color: green"
+            })
+            //remove the previous click event
+            $(boxBack).off();
+            //change class from red
+            $(boxBack).removeClass("yellow");
+            //to green
+            $(boxBack).addClass("green");
+            if($(this).hasClass("green")){
+               $(boxBack).off();
+               colors.push("green");
+               console.log(colors);
+               if (colors.length > 2){
+                finalFunction();
+              }
+
+     }
  });
+}); //boxBack
+ $(boxSign).click(function(){
+   console.log("boxSign");
+        //on second click
+        //change color to red
+        $(boxSign).removeAttr("color");
+        $(boxSign).attr({
+         material: "color: green"
+       })
+       //remove the previous click event
+       $(boxSign).off();
+       //replace with red class
+       $(boxSign).addClass("green");
+            //on third click
+           $(boxSign).click(function(){
+             //change the color to green
+             $(boxSign).removeAttr("color");
+             $(boxSign).attr({
+              material: "color: purple"
+            })
+            //remove the previous click event
+            $(boxSign).off();
+            //change class from red
+            $(boxSign).removeClass("green");
+            //to green
+            $(boxSign).addClass("purple");
+            if($(this).hasClass("purple")){
+               $(boxSign).off();
+               colors.push("purple");
+            }
+            if (colors.length > 2){
+                finalFunction();
+          }
+   });
+ }); //boxSign
 }
 
 //Changing the block colors
-//passes the three box elements [targer],[otherBox1],[otherBox2]
-toggleFunction = function(element,otherBox,anotherBox){
+//passes the three box elements [target element]
+toggleFunction = function(element){
   $(element).click(function(){
     //on first click change the color to yellow
      console.log("color change");
@@ -179,17 +300,7 @@ toggleFunction = function(element,otherBox,anotherBox){
      if ($(this).hasClass("green")){
      $(element).removeClass("green");
      }
-     //change the color to yellow
-     $(element).removeAttr("color");
-     $(element).attr({
-      material: "color: yellow"
-    })
-    //remove the preivous click event
-    $(element).off();
-    //add a class of yellow
-    $(element).addClass("yellow");
         //on second click
-        $(element).click(function(){
           //change color to red
           $(element).removeAttr("color");
           $(element).attr({
@@ -197,8 +308,6 @@ toggleFunction = function(element,otherBox,anotherBox){
          })
          //remove the previous click event
          $(element).off();
-         //remove the yellow class
-         $(element).removeClass("yellow");
          //replace with red class
          $(element).addClass("red");
               //on third click
@@ -216,10 +325,11 @@ toggleFunction = function(element,otherBox,anotherBox){
               $(element).addClass("green");
               //if the green class exceeds 2 elements -- initiate next puzzle
               if ($(".green").length > 2){
+
                 //remove click events from all elements when all blocks are green
                 $("#trafficLights").attr({
                   animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 1.5 0 1.5",
-                  sound:"autoplay: on; loop: false; src: #success; volume: 1; poolSize: 2"
+                  sound:"autoplay: on; loop: false; src: #success; volume: 0.5; poolSize: 2"
                 })
                 //brighten up the sky
                 sky.attr({
@@ -230,13 +340,11 @@ toggleFunction = function(element,otherBox,anotherBox){
               scene.attr({animation__fog:"property: fog.color; dir: normal; dur: 6000; easing: easeInSine; loop: false; to:#faa0a2 "});
               //fog #faa0a2
                 $("#questionBlock").addClass("nextClicks")
-                //removeElementsFromDom
-                setTimeout(function(){
                   $(element).removeAttr("animation__scaleDown");
-                  $("#trafficLights").remove();
                   questionBlockFunction("moreSwitchesText","#moreSwitches");
                   //add Circle after 4 seconds
-                  var timeoutVar = setTimeout(function(){ring()},6000);//end of circle timeout
+                  var timeoutVar = setTimeout(function(){ring(),$("#trafficLights").remove();},6000);//end of circle timeout
+
                       $("#questionBlock").click(function(){
                       //onNextClickEventRemoveTheRing
                       clearTimeout(timeoutVar);
@@ -255,8 +363,8 @@ toggleFunction = function(element,otherBox,anotherBox){
                                                 id:"colourBoxesText",
                                                 src: "#colourBoxes",
                                                 position:" 11.20 4.38 0",
-                                                rotation:"0 90 0",
-                                                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 5 2.5 2.5"
+                                                rotation:"0 -90 0",
+                                                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 6 3 3"
                                               })
                             );
                             $("#movingLights").append($(document.createElement("a-entity"))
@@ -284,7 +392,6 @@ toggleFunction = function(element,otherBox,anotherBox){
                             $("#movingLights").append($(document.createElement("a-entity"))
                                         .attr({id:"boxBack",
                                                geometry:"primative: box",
-                                               material:"color: #ff0d08",
                                                position:"0 2.5 8",
                                                scale:"0 0 0",
                                                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 2 2 2",
@@ -307,7 +414,6 @@ toggleFunction = function(element,otherBox,anotherBox){
                             $("#movingLights").append($(document.createElement("a-entity"))
                                         .attr({id:"boxSign",
                                                geometry:"primative: box",
-                                               material:"color: #00ff75",
                                                position:" 14 2 0",
                                                scale:"0 0 0",
                                                animation__scale:"property: scale; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 3 3 3",
@@ -331,25 +437,15 @@ toggleFunction = function(element,otherBox,anotherBox){
                           //Add the box-toggle function
                           movingPuzzle($("#boxUp"),$("#boxBack"),$("#boxSign"));
 
-                          //Add the box-toggle function
-                          movingPuzzle($("#boxBack"),$("#boxSign"),$("#boxUp"));
-
-                          //Add the box-toggle function
-                          movingPuzzle($("#boxSign"),$("#boxUp"),$("#boxBack"));
-                          //
-
-
 
                       } //end of IF statement
                    })
 
-                },4000);
               }
               //if the green glass does not exceed 2 elements -- continue clicking
               else {
-                toggleFunction(element,otherBox,anotherBox);
+                toggleFunction(element);
               }
-            });
        });
   });
 }
@@ -457,7 +553,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
 
   $('#startBox').one("click",function(){
     $("#startBox").attr({
-    sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
+    sound:"autoplay: on; loop: false; src: #click-sound; volume: 5; poolSize: 2",
     animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
 
     })
@@ -506,7 +602,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
        $("#questionBlock").append($(document.createElement("a-entity"))
          .attr({
            id: "questionBlockSound",
-           sound:"autoplay: on; loop: false; src: #box-sound; volume: 6; poolSize: 2",
+           sound:"autoplay: on; loop: false; src: #box-sound; volume: 5; poolSize: 2",
            //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
          })
        );
@@ -583,7 +679,6 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
                        .attr({
                                 id:"rightBox",
                                 geometry:"primative: box",
-                                material:"color: blue",
                                 position:" 10.83 2 2",
                                 scale:"0 0 0",
                                 animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
@@ -591,34 +686,32 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
                    );
 
          //Add the box-toggle function
-         toggleFunction($("#rightBox"),$("#middleBox"),$("#leftBox"));
+         toggleFunction($("#rightBox"));
 
          //Create the middle Box
          $("#trafficLights").append($(document.createElement("a-entity"))
                      .attr({
                               id:"middleBox",
                               geometry:"primative: box",
-                              material:"color: orange",
                               position:" 10.83 2 0",
                               scale:"0 0 0",
                               animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
                    })
                  );
          //Add the box-toggle function
-         toggleFunction($("#middleBox"),$("#leftBox"),$("#rightBox"));
+         toggleFunction($("#middleBox"));
          //Create the left box
          $("#trafficLights").append($(document.createElement("a-entity"))
                      .attr({
                               id:"leftBox",
                               geometry:"primative: box",
-                              material:"color: tomato",
                               position:" 10.83 2 -2",
                               scale:"0 0 0",
                               animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
                    })
                  );
           //Add the box-toggle function
-          toggleFunction($("#leftBox"),$("#rightBox"),$("#middleBox"));
+          toggleFunction($("#leftBox"));
 
          // Create the lighting for the Box above as a child element
          $('#trafficLights').append($(document.createElement("a-entity"))
@@ -751,7 +844,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
          });
   */
            } //--end of code block that brings about the yellow bock to start the experience ----------------------------------//
-         },500);// end of add sound to hidden entity
+         },8000);// end of add sound to hidden entity
          });
        },700);//end of remove startup elements and add question block
     });
