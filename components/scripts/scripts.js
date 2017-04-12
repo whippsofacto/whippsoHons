@@ -88,6 +88,147 @@ $("#questionBlock").append($(document.createElement("a-ring"))
   );
 }
 
+finish = function(){
+  $("#lastScene").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 1.5 0 1.5",
+    sound:"autoplay: on; loop: false; src: #success; volume: 2; poolSize: 2"
+  })
+}
+
+endGameFunction = function(l,r,c,h){
+  var endArray = [];
+
+       $(l).click(function(){
+         console.log("Left");
+              //on second click
+              //change color to red
+              $(l).removeAttr("color");
+              $(l).attr({
+               material: "color: white"
+             })
+             //remove the previous click event
+             $(l).off();
+             //replace with white class
+             $(l).addClass("white");
+                  if($(this).hasClass("white")){
+                     $(l).off();
+                     endArray.push("left");
+                     console.log(endArray);
+                     if (endArray.length > 3){
+                     finish();
+                     }
+
+           }
+     }); //left
+
+      $(r).click(function(){
+        console.log("right");
+             //on second click
+             //change color to red
+             $(r).removeAttr("color");
+             $(r).attr({
+              material: "color: white"
+            })
+            //remove the previous click event
+            $(r).off();
+            //replace with white class
+            $(r).addClass("white");
+                 if($(this).hasClass("white")){
+                    $(r).off();
+                    endArray.push("right");
+                    console.log(endArray);
+                    if (endArray.length > 3){
+                    finish();
+                    }
+
+          }
+    }); //right
+
+    $(c).click(function(){
+      console.log("center");
+           //on second click
+           //change color to red
+           $(c).removeAttr("color");
+           $(c).attr({
+            material: "color: white"
+          })
+          //remove the previous click event
+          $(c).off();
+          //replace with white class
+          $(c).addClass("white");
+               if($(this).hasClass("white")){
+                  $(c).off();
+                  endArray.push("center");
+                  console.log(endArray);
+                  if (endArray.length > 3){
+                  finish();
+                  }
+
+        }
+  }); //center
+
+  $(h).click(function(){
+    console.log("hidden");
+         //on second click
+         //change color to red
+         $(h).removeAttr("color");
+         $(h).attr({
+          material: "color: white"
+        })
+        //remove the previous click event
+        $(h).off();
+        //replace with white class
+        $(h).addClass("white");
+             if($(this).hasClass("white")){
+                $(r).off();
+                endArray.push("hidden");
+                console.log(endArray);
+                if (endArray.length > 3){
+                finish();
+                }
+
+      }
+}); //hidden
+
+ var myTimeOutFunction = setTimeout(function(){
+   if (endArray.length > 3){
+     clearTimeout(myTimeOutFunction)
+   } else {
+
+   endArray.length = 0;
+
+   $(r).removeAttr("color");
+   $(r).attr({
+    material: "color: red"
+   })
+   $(r).removeClass("white")
+
+   $(l).removeAttr("color");
+   $(l).attr({
+    material: "color: red"
+   })
+   $(l).removeClass("white")
+
+   $(l).removeAttr("color");
+   $(l).attr({
+   material: "color: red"
+   })
+   $(l).removeClass("white")
+
+   $(l).removeAttr("color");
+   $(l).attr({
+    material: "color: red"
+   })
+   $(l).removeClass("white")
+
+   console.log(endArray + " REST");
+   endGameFunction(l,r,c,h);
+  }
+ },15500)
+
+
+}
+
 
 //----- Bring about the bridge and final transition ------//
 finalFunction = function (){
@@ -177,6 +318,90 @@ $("#questionBlockLight").attr({
   animation__qbColor:"property: light.color; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: #e1ff6a",
   animation__qbPosition:"property: position; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 0 -0.03 5"
 })
+    // ---- Add the elements for the last scene -----------------------------------------------------------------//
+    scene.append($(document.createElement("a-entity"))
+    .attr({
+      id:"lastScene"
+    })
+    );
+
+    $("#lastScene").append($(document.createElement("a-image"))
+                .attr({id:"skullPlaneTextRight",
+                       src:"#skullPlane",
+                       position:"6 4 -16",
+                       animation__scale:"property: scale; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 4 2 2",
+                      })
+    );
+    $("#lastScene").append($(document.createElement("a-image"))
+                .attr({id:"fourBoxSignText",
+                       src:"#fourBoxSign",
+                       position:" 11.20 4.38 0",
+                       rotation:"0 -90 0",
+                       animation__scale:"property: scale; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 5 2.5 2.5",
+                      })
+    );
+
+
+    $("#lastScene").append($(document.createElement("a-image"))
+                .attr({id:"skullPlaneTextRight",
+                       src:"#skullPlane",
+                       position:"6 4 -16",
+                       animation__scale:"property: scale; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 4 2 2",
+                      })
+    );
+
+    $("#lastScene").append($(document.createElement("a-image"))
+                .attr({id:"skullPlaneTextLeft",
+                       src:"#skullPlane",
+                       position:"-6 4 -16",
+                       animation__scale:"property: scale; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 4 2 2",
+                      })
+    );
+
+    $("#lastScene").append($(document.createElement("a-entity"))
+                .attr({
+                id:"skullBoxCenter",
+                geometry:"primative: box",
+                material: "color: red",
+                position:" -34 15 -100",
+                scale:"0 0 0",
+                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 6 6 6",
+                animation__yoyo:"property: position; dir: alternate; dur: 8000; easing: easeInSine; loop: true; to: 34 15 -100"
+     })
+    );
+    $("#lastScene").append($(document.createElement("a-entity"))
+                .attr({
+                  id:"skullBoxRight",
+                  geometry:"primative: box",
+                  material: "color: red",
+                  position:" 9 5.5 -30",
+                  scale:"0 0 0",
+                  animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.75 1.75 1.75 "
+      })
+    );
+    $("#lastScene").append($(document.createElement("a-entity"))
+                .attr({
+                  id:"skullBoxLeft",
+                  geometry:"primative: box",
+                  material: "color: red",
+                  position:" -9 5.5 -30",
+                  scale:"0 0 0",
+                  animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.75 1.75 1.75"
+     })
+    );
+    $("#lastScene").append($(document.createElement("a-entity"))
+                .attr({
+                  id:"skullBoxHidden",
+                  geometry:"primative: box",
+                  material: "color: red",
+                  position:" 0 1.6 3",
+                  scale:"0 0 0",
+                  animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1 1 1"
+     })
+    );
+
+    endGameFunction($("#skullBoxLeft"),$("#skullBoxRight"),$("#skullBoxCenter"),$("#skullBoxHidden"));
+
 }//End of finalFunction
 
 movingPuzzle = function (boxUp,boxBack,boxSign){
@@ -370,6 +595,7 @@ toggleFunction = function(element){
                             $("#movingLights").append($(document.createElement("a-entity"))
                                         .attr({id:"boxUp",
                                                geometry:"primative: box",
+                                               material: "color: pink",
                                                position:" 0.17 8.52 -5",
                                                scale:"0 0 0",
                                                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
@@ -392,6 +618,7 @@ toggleFunction = function(element){
                             $("#movingLights").append($(document.createElement("a-entity"))
                                         .attr({id:"boxBack",
                                                geometry:"primative: box",
+                                               material: "color: blue",
                                                position:"0 2.5 8",
                                                scale:"0 0 0",
                                                animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 2 2 2",
@@ -414,6 +641,7 @@ toggleFunction = function(element){
                             $("#movingLights").append($(document.createElement("a-entity"))
                                         .attr({id:"boxSign",
                                                geometry:"primative: box",
+                                               material: "color: orange",
                                                position:" 14 2 0",
                                                scale:"0 0 0",
                                                animation__scale:"property: scale; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 3 3 3",
@@ -679,6 +907,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
                        .attr({
                                 id:"rightBox",
                                 geometry:"primative: box",
+                                material: "color: pink",
                                 position:" 10.83 2 2",
                                 scale:"0 0 0",
                                 animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
@@ -693,6 +922,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
                      .attr({
                               id:"middleBox",
                               geometry:"primative: box",
+                              material: "color: grey",
                               position:" 10.83 2 0",
                               scale:"0 0 0",
                               animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
@@ -705,6 +935,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
                      .attr({
                               id:"leftBox",
                               geometry:"primative: box",
+                              material: "color: orange",
                               position:" 10.83 2 -2",
                               scale:"0 0 0",
                               animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.5 1.5 1.5"
