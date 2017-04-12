@@ -121,21 +121,23 @@ endOfAllThings = function(){
   $("#cursor").attr({
     sound:"autoplay: true; volume: 1.25; loop:true; src: #loopEnd; poolSize: 2"
   })
-  var timeoutVar = setTimeout(function(){ring();},40000);
   sky.removeAttr("animation__top");
   sky.removeAttr("animation__bottom");
   sky.attr({
-  animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 2 2 10",
-  animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 238 239 247"
+  animation__top:"property: material.topColor; dir: normal; dur: 30000; easing: easeInSine; loop: false; to: 2 2 10",
+  animation__bottom:"property: material.bottomColor; dir: normal; dur: 35000; easing: easeInSine; loop: false; to: 238 239 247"
   });
   //change fog to orange
   scene.removeAttr("animation__fog");
   scene.attr({animation__fog:"property: fog.color; dir: normal; dur: 6000; easing: easeInSine; loop: false; to:#4E2A73"});
-
+  var timeoutVar = setTimeout(function(){ring();},40000);
   $("#questionBlock").off();
   $("#questionBlock").click(function(){
-    $("#circle").remove();
+    //onNextClickEventRemoveTheRing
     clearTimeout(timeoutVar);
+    //if ring is added it should be removed
+    $("#circle").remove();
+    $("#circle").remove();
     $("#timeToLeaveText")
     .attr({
       visible: "true",
@@ -165,6 +167,7 @@ endOfAllThings = function(){
   setTimeout(function(){
   $("#timeToLeaveText").remove();
   $('#questionBlockSound').remove();
+  $('#startPoint').removeAttr("sound");
   $("#cursor").removeAttr("sound");
       scene.append($(document.createElement("a-image"))
         .attr({
