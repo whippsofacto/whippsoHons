@@ -7,12 +7,6 @@ AFRAME.registerComponent('foo', {
     //Variables ---------------------------- //
     var scene = $('a-scene');
     var entity = $(document.createElement('a-entity'));
-    var box = $(document.createElement('a-entity'));
-    var movingBox = $(document.createElement('a-entity'));
-    var movingLight = $(document.createElement('a-entity'));
-    var hoverBox = $(document.createElement('a-entity'));
-    var hoverLight = $(document.createElement('a-entity'));
-    var light = $(document.createElement('a-entity'));
     var sky = $('#sky');
 
 //--------- Functions -------------------------------------------//
@@ -88,11 +82,136 @@ $("#questionBlock").append($(document.createElement("a-ring"))
   );
 }
 
+
+endOfAllThings = function(){
+  $("#testBox").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 10000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#ocean-1").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 15000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#ocean-2").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 24000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#ocean-3").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 9850; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#ocean-4").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 7000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#startPoint").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#mainIsland").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 13000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#bridge").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 9000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#exitDoorText").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 10000; easing: easeInSine; loop: false; to: 0 0 0",
+  })
+  $("#endText").removeAttr("visible");
+  $("#endText").attr({
+         position: "-7.35 2.92 -41.23",
+         rotation: "0 -11 0",
+         scale:"0 0  0",
+         animation__scale:"property: scale; dir: normal; dur: 18000; easing: easeInSine; loop: false; to: 2 1 1",
+        })
+  $("#cursor").attr({
+    sound:"autoplay: true; volume: 1.25; loop:true; src: #loopEnd; poolSize: 2"
+  })
+  sky.removeAttr("animation__top");
+  sky.removeAttr("animation__bottom");
+  sky.attr({
+  animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 2 2 10",
+  animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 238 239 247"
+  });
+  //change fog to orange
+  scene.removeAttr("animation__fog");
+  scene.attr({animation__fog:"property: fog.color; dir: normal; dur: 6000; easing: easeInSine; loop: false; to:#4E2A73"});
+
+  $("#questionBlock").off();
+  $("#questionBlock").click(function(){
+    $("#timeToLeaveText")
+    .attr({
+      visible: "true",
+      scale: "2.5 1.5 1.5",
+      position:"-2.83 2.1 -0.04",
+      rotation:"0 90 0"
+    });
+  //add sound to hidden entity
+  $("#questionBlock").append($(document.createElement("a-entity"))
+    .attr({
+      id: "questionBlockSound",
+      sound:"autoplay: on; loop: false; src: #box-sound; volume: 5; poolSize: 2",
+      //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+    })
+  );
+  setTimeout(function(){
+    $('#questionBlockSound')
+    .attr({
+     sound:"autoplay: on; loop: false; src: #close-box; volume: 5; poolSize: 2",
+   })
+   $("#timeToLeaveText")
+   .attr({
+     animation__scaleDown:"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0",
+   })
+ },4000);
+  //after 4 seconds remove the lights Hint message
+  setTimeout(function(){
+  $("#timeToLeaveText").remove();
+  $('#questionBlockSound').remove();
+      scene.append($(document.createElement("a-image"))
+        .attr({
+          id:  "timeToLeaveText",
+          src: "#timeToLeave",
+          visible: "false",
+          scale: "2.5 1.5 1.5",
+          position:"-2.83 2.1 -0.04",
+          rotation:"90 0 0"
+
+          //"animation__scale-outer-radius":"property: scale; dir: normal; dur: 700; easing: easeInSine; loop: false; to: 0 0 0"
+        })
+      );
+    }, 4700);
+  });
+}
+
+
 finish = function(){
-  $("#lastScene").attr({
-    animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 1.5 0 1.5",
+    $("questionBlock").addClass("finale");
+    $("#circle").remove();
+    $("#lastScene").attr({
+    animation__scaleDown:"property: scale; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 0 0 0",
     sound:"autoplay: on; loop: false; src: #success; volume: 2; poolSize: 2"
   })
+    $("#count-3-text").remove();
+    $("#count-2-text").remove();
+    $("#count-1-text").remove();
+    $("#ratsText").remove();
+
+    $('.secondBridge').removeAttr('visible');
+
+
+    $("#bridge").attr({
+      animation__length:"property: height; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 30",
+      animation__position:"property: position; dir: normal; dur: 1500; easing: easeInSine; loop: false; to: 0 0.5 -19 "
+
+    })
+
+
+    $("#exitDoorText").removeAttr("visible");
+    $("#exitDoorText").attr({
+      position: "-6.05 1.72 -40.3",
+      rotation: "0 -60.16 89.95",
+      scale: "2 1 1"
+     }
+    )
+
+    $("#exitDoorText").click(function(){
+      endOfAllThings();
+    });
 }
 
 endGameFunction = function(l,r,c,h){
@@ -115,87 +234,114 @@ endGameFunction = function(l,r,c,h){
                      endArray.push("left");
                      console.log(endArray);
                      if (endArray.length > 3){
+                     clearTimeout(myTimeOutFunction)
                      finish();
                      }
 
            }
      }); //left
 
-      $(r).click(function(){
-        console.log("right");
-             //on second click
-             //change color to red
-             $(r).removeAttr("color");
-             $(r).attr({
-              material: "color: white"
-            })
-            //remove the previous click event
-            $(r).off();
-            //replace with white class
-            $(r).addClass("white");
-                 if($(this).hasClass("white")){
-                    $(r).off();
-                    endArray.push("right");
-                    console.log(endArray);
-                    if (endArray.length > 3){
-                    finish();
-                    }
+     $(r).click(function(){
+       console.log("right");
+            //on second click
+            //change color to red
+            $(r).removeAttr("color");
+            $(r).attr({
+             material: "color: white"
+           })
+           //remove the previous click event
+           $(r).off();
+           //replace with white class
+           $(r).addClass("white");
+                if($(this).hasClass("white")){
+                   $(r).off();
+                   endArray.push("right");
+                   console.log(endArray);
+                   if (endArray.length > 3){
+                     clearTimeout(myTimeOutFunction)
+                   finish();
+                   }
 
-          }
-    }); //right
+         }
+   }); //right
+   $(c).click(function(){
+     console.log("cent");
+          //on second click
+          //change color to red
+          $(c).removeAttr("color");
+          $(c).attr({
+           material: "color: white"
+         })
+         //remove the previous click event
+         $(c).off();
+         //replace with white class
+         $(c).addClass("white");
+              if($(this).hasClass("white")){
+                 $(c).off();
+                 endArray.push("cent");
+                 console.log(endArray);
+                 if (endArray.length > 3){
+                 clearTimeout(myTimeOutFunction)
 
-    $(c).click(function(){
-      console.log("center");
-           //on second click
-           //change color to red
-           $(c).removeAttr("color");
-           $(c).attr({
-            material: "color: white"
-          })
-          //remove the previous click event
-          $(c).off();
-          //replace with white class
-          $(c).addClass("white");
-               if($(this).hasClass("white")){
-                  $(c).off();
-                  endArray.push("center");
-                  console.log(endArray);
-                  if (endArray.length > 3){
-                  finish();
-                  }
+                 finish();
+                 }
 
-        }
-  }); //center
+       }
+ }); //cent
+ $(h).click(function(){
+   console.log("hid");
+        //on second click
+        //change color to red
+        $(h).removeAttr("color");
+        $(h).attr({
+         material: "color: white"
+       })
+       //remove the previous click event
+       $(h).off();
+       //replace with white class
+       $(h).addClass("white");
+            if($(this).hasClass("white")){
+               $(h).off();
+               endArray.push("hid");
+               console.log(endArray);
+               if (endArray.length > 3){
+               clearTimeout(myTimeOutFunction)
 
-  $(h).click(function(){
-    console.log("hidden");
-         //on second click
-         //change color to red
-         $(h).removeAttr("color");
-         $(h).attr({
-          material: "color: white"
-        })
-        //remove the previous click event
-        $(h).off();
-        //replace with white class
-        $(h).addClass("white");
-             if($(this).hasClass("white")){
-                $(r).off();
-                endArray.push("hidden");
-                console.log(endArray);
-                if (endArray.length > 3){
-                finish();
-                }
+               finish();
+               }
 
-      }
+     }
 }); //hidden
+
+//CountDown--------------------------------//
+    setTimeout(function(){
+    $("#count-3-text").removeAttr("visible")
+    console.log("3");
+    },12000)
+    setTimeout(function(){
+    $("#count-3-text").attr({visible:"false"})
+    $("#count-2-text").removeAttr("visible")
+    console.log("2");
+    },13000)
+    setTimeout(function(){
+    $("#count-2-text").attr({visible:"false"})
+    $("#count-1-text").removeAttr("visible")
+    console.log("1");
+    },14000)
+    setTimeout(function(){
+      $("#count-1-text").attr({visible:"false"})
+      $("#ratsText").removeAttr("visible")
+      console.log("RATS");
+    },15000)
+
 
  var myTimeOutFunction = setTimeout(function(){
    if (endArray.length > 3){
      clearTimeout(myTimeOutFunction)
    } else {
-
-   endArray.length = 0;
+     for (var i = endArray.length; i > 0; i--) {
+      endArray.pop();
+     }
 
    $(r).removeAttr("color");
    $(r).attr({
@@ -220,11 +366,12 @@ endGameFunction = function(l,r,c,h){
     material: "color: red"
    })
    $(l).removeClass("white")
-
-   console.log(endArray + " REST");
+   //--Clear Rats
+   $("#ratsText").attr({visible:"false"})
+   console.log(endArray + " RESET");
    endGameFunction(l,r,c,h);
   }
- },15500)
+},16000)
 
 
 }
@@ -252,7 +399,7 @@ finalFunction = function (){
   .attr({
     id:"ambientLight",
     light:"angle: 10; color: #ff9dff; intensity: 0; type: ambient",
-    animation__intensity:"property: light.intensity; dir: normal; dur: 15000; easing: easeInSine; loop: false; to: 0.4",
+    animation__intensity:"property: light.intensity; dir: normal; dur: 3000; easing: easeInSine; loop: false; to: 0.4",
    })
   );
   //clear out old questionBoxStuff
@@ -260,6 +407,7 @@ finalFunction = function (){
   //new RING alert
   var timeoutVar = setTimeout(function(){ring(),$("#trafficLights").remove();},6000);//end of circle timeout
   $("#questionBlock").click(function(){
+    $("#questionBlockSound").remove();
     //after the click has run once only show the questionBlock for "openBridge"
     if ($("#questionBlock").hasClass("openBridge")){
       questionBlockFunction("openBridgeText","#openBridge");
@@ -369,6 +517,15 @@ $("#questionBlockLight").attr({
                 animation__yoyo:"property: position; dir: alternate; dur: 8000; easing: easeInSine; loop: true; to: 34 15 -100"
      })
     );
+    $("#skullBoxCenter").append($(document.createElement("a-entity"))
+    .attr({
+      id:"skullBoxCenterLight",
+      light:"color: #fff; angle 60 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+      position:"-0.3 0 3",
+      rotation:"60 0 0",
+      animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+    })
+  );
     $("#lastScene").append($(document.createElement("a-entity"))
                 .attr({
                   id:"skullBoxRight",
@@ -379,6 +536,15 @@ $("#questionBlockLight").attr({
                   animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.75 1.75 1.75 "
       })
     );
+    $("#skullBoxRight").append($(document.createElement("a-entity"))
+    .attr({
+      id:"skullBoxRightLight",
+      light:"color: #fff; angle 60 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+      position:"0 -3.5 2.25",
+      rotation:"60 0 0",
+      animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+    })
+  );
     $("#lastScene").append($(document.createElement("a-entity"))
                 .attr({
                   id:"skullBoxLeft",
@@ -389,6 +555,15 @@ $("#questionBlockLight").attr({
                   animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1.75 1.75 1.75"
      })
     );
+    $("#skullBoxLeft").append($(document.createElement("a-entity"))
+    .attr({
+      id:"skullBoxLeftLight",
+      light:"color: #fff; angle 60 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+      position:"0 -3.5 2.25",
+      rotation:"60 0 0",
+      animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+    })
+  );
     $("#lastScene").append($(document.createElement("a-entity"))
                 .attr({
                   id:"skullBoxHidden",
@@ -399,6 +574,15 @@ $("#questionBlockLight").attr({
                   animation__scale:"property: scale; dir: normal; dur: 4000; easing: easeInSine; loop: false; to: 1 1 1"
      })
     );
+    $("#skullBoxHidden").append($(document.createElement("a-entity"))
+    .attr({
+      id:"skullBoxHiddenLight",
+      light:"color: #fff; angle 60 intensity:0.4; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
+      position:"0 -1 -3",
+      rotation:"0 -180.00 0",
+      animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1"
+    })
+  );
 
     endGameFunction($("#skullBoxLeft"),$("#skullBoxRight"),$("#skullBoxCenter"),$("#skullBoxHidden"));
 
@@ -955,126 +1139,7 @@ $("#desktopInfo").append($(document.createElement("a-entity"))
                                          })
                                        );
 
-
-
-// --- End of the first puzzle -----------------------------------------------------------------------------------------------------------------//
-
-  /*
-              $('#trafficLights').one("click",function() {
-              console.log("ello box");
-              scene.append(movingBox);
-              movingBox.attr({
-                           id:"movingBox",
-                           geometry:"primative: box",
-                           position:" 7.68 2 10.33",
-                           sound:"autoplay: on; loop: false; src: #click-sound; volume: 10; poolSize: 2",
-                           scale:"0 0 0",
-                           animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 2 2 2",
-                           animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -2.61 2 10.33"
-                     });
-              movingBox.append(movingLight);
-              movingLight.attr({
-                id:"movingLight",
-                light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-                position:"-0.59 -0.03 -4.04",
-                rotation:"35.58 -178.19 0",
-                animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-                animation__move:"property: position; dir: alternate; dur: 1850; easing: easeInSine; loop: true; to: -3.82 -0.03 -4.04"
-            });
-
-                //second box click function
-                movingBox.one("click",function() {
-                console.log("movingClick");
-                scene.append(hoverBox);
-                //Add 3rd Box
-                hoverBox.attr({ id:"hoverBox",
-                                geometry:"primative: box",
-                                position:" 6.24 7.50 0.18",
-                                sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",
-                                scale:"0 0 0",
-                                animation__scale:"property: scale; dir: normal; dur: 2000; easing: easeInSine; loop: false; to: 1 1 1",
-                             });
-                hoverBox.append(hoverLight);
-                //Add lighting to the 3rd Box
-                hoverLight.attr({
-                  light:"color: #9ef6ff; intensity:0.88; groundColor: #8afff0; decay: -100; penumbra: 1; type: spot",
-                  position:"5.4 -0.03 -4.04",
-                  rotation:"21.77 -177.62 2.86",
-                  animation__lightsUp:"property: light.intensity; dir: normal; dur: 2000; easing: easeInSine; loop: false; from: 0; to: 0.88",
-                  animation__move:"property: position; dir: alternate; dur: 1650; easing: easeInSine; loop: true; to: -0.59 -0.03 -4.04"
-                });
-                //Prompt
-                entity.attr({  id:"mustBeAnotherOneSomewhereText",
-                               "obj-model":"obj: #anotherOneSomewhere-obj; mtl: #anotherOneSomewhere-mtl",
-                               scale:"0.6 0.6 0.6",
-                               position:"0.3 2.26 -5.20",
-                               rotation:"90 0 0",
-                               animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"
-                           });
-                         });
-
-               //3rd Box Function ---------------------//
-               hoverBox.one("click",function() {
-                 //celebrate the lights coming on
-                 entity.attr({  id:"aziz",
-                                "obj-model":"obj: #aziz-obj; mtl: #aziz-mtl",
-                                scale:"0.6 0.6 0.6",
-                                position:"0.3 2.26 -5.20",
-                                rotation:"90 0 0",
-                                animation__text:"property: position; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: -2.3 3.08 -5.20"});
-
-                 //sky animation
-                 sky.attr({
-                 animation__top:"property: material.topColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 140 200 250",
-                 animation__bottom:"property: material.bottomColor; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 172 233 237"});
-                 //lights ON!
-                 scene.append(light);
-                 light.attr({
-                 light:"type: ambient; color: #BBB"
-               });
-                 scene.attr({animation__fog:"property: fog.density; dir: normal; dur: 6000; easing: easeInSine; loop: false; to: 0.1"});
-                 $('#signPost').removeAttr("visible");
-                 $('#signPost').attr({sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
-             });
-
-             $("#signPost").one("click",function(){
-               $("#bridge").removeAttr('visible');
-               //text
-               setTimeout(function(){
-                 entity.attr({  id:"bridgeOpenText",
-                                "obj-model":"obj: #bridgeOpen-obj; mtl: #bridgeOpen-mtl",
-                                scale:"0.6 0.6 0.6",
-                                position:"0.2 2.26 -5.52",
-                                rotation:"0 0 0"});
-
-               },3000);
-
-               setTimeout(function(){
-                 entity.attr({  id:"answerText",
-                  "obj-model":"obj: #answer-obj; mtl: #answer-mtl",
-                  scale:"0.6 0.6 0.6",
-                  position:"0.2 2.26 -6.20",
-                  rotation:"0 0 0"});
-                  $("#testBox").attr({ sound:"autoplay: on; loop: false; src: #click-sound; volume: 1; poolSize: 2",});
-
-               },7000);
-
-               setTimeout(function(){
-              entity.attr({
-                            id:"riddleText",
-                            "obj-model":"obj: #riddle-obj; mtl: #riddle-mtl",
-                            scale:"0.6 0.6 0.6",
-                            position:"0.2 2.26 -7.20",
-                            rotation:"0 0 0"});
-
-               $("#testBox").one("click",function(){
-                $('#pads').removeAttr('visible');
-               });
-               },12000);
-           });
-         });
-  */
-           } //--end of code block that brings about the yellow bock to start the experience ----------------------------------//
+           } //--end of code block
          },8000);// end of add sound to hidden entity
          });
        },700);//end of remove startup elements and add question block

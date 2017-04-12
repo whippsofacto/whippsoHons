@@ -24,6 +24,8 @@
         <audio id="click-sound" src="./assets/smw_coin.wav"></audio>
         <audio id="block-alert" src="./assets/swn_pause_longEdit.mp3"></audio>
         <audio id="success" src="./assets/final-fantasy-v-music-victory-fanfare.mp3"></audio>
+        <audio id="loopEnd" src="./assets/loopEnd.mp3"></audio>
+
 
 
 
@@ -33,8 +35,8 @@
         <!-- Models-->
         <a-asset-item id="lighthouse-obj" src="./assets/models/lighthouse0.5.obj"></a-asset-item>
         <a-asset-item id="lighthouse-mtl" src="./assets/models/lighthouse0.5.mtl"></a-asset-item>
-        <a-asset-item id="sign-obj" src="./assets/models/newSign.0.1.obj"></a-asset-item>
-        <a-asset-item id="sign-mtl" src="./assets/models/newSign.0.1.mtl"></a-asset-item>
+        <a-asset-item id="questionBlock-obj" src="./assets/models/questionBlock.2.obj"></a-asset-item>
+        <a-asset-item id="questionBlock-mtl" src="./assets/models/questionBlock.2.mtl"></a-asset-item>
         <!-- Dialogue -->
 
         <a-asset-item id="clickInfo" src="./assets/models/signPops/textBox01.png"></a-asset-item>
@@ -51,25 +53,18 @@
         <a-asset-item id="openBridge" src="./assets/models/signPops/openBridge.png"></a-asset-item>
         <a-asset-item id="skullPlane" src="./assets/models/signPops/skullPlane.png"></a-asset-item>
         <a-asset-item id="fourBoxSign" src="./assets/models/signPops/fourBoxSign.png"></a-asset-item>
+        <a-asset-item id="count-3" src="./assets/models/signPops/3.png"></a-asset-item>
+        <a-asset-item id="count-2" src="./assets/models/signPops/2.png"></a-asset-item>
+        <a-asset-item id="count-1" src="./assets/models/signPops/1.png"></a-asset-item>
+        <a-asset-item id="rats" src="./assets/models/signPops/rats.png"></a-asset-item>
+        <a-asset-item id="timeToLeave" src="./assets/models/signPops/timeToLeave.png"></a-asset-item>
+        <a-asset-item id="exitDoor" src="./assets/models/signPops/door.png"></a-asset-item>
+        <a-asset-item id="end" src="./assets/models/signPops/end.png"></a-asset-item>
 
 
 
 
 
-        <a-asset-item id="lightsOnText-obj" src="./assets/models/textObj/lightsOn.obj"></a-asset-item>
-        <a-asset-item id="lightsOnText-mtl" src="./assets/models/textObj/lightsOn.mtl"></a-asset-item>
-        <a-asset-item id="anotherOneSomewhere-obj" src="./assets/models/textObj/anotherOneSomewhere.obj"></a-asset-item>
-        <a-asset-item id="anotherOneSomewhere-mtl" src="./assets/models/textObj/anotherOneSomewhere.mtl"></a-asset-item>
-        <a-asset-item id="aziz-obj" src="./assets/models/textObj/aziz.obj"></a-asset-item>
-        <a-asset-item id="aziz-mtl" src="./assets/models/textObj/aziz.mtl"></a-asset-item>
-        <a-asset-item id="answer-obj" src="./assets/models/textObj/answerThisQuestion.obj"></a-asset-item>
-        <a-asset-item id="answer-mtl" src="./assets/models/textObj/answerThisQuestion.mtl"></a-asset-item>
-        <a-asset-item id="bridgeOpen-obj" src="./assets/models/textObj/birdgeOpen.obj"></a-asset-item>
-        <a-asset-item id="bridgeOpen-mtl" src="./assets/models/textObj/birdgeOpen.mtl"></a-asset-item>
-        <a-asset-item id="riddle-obj" src="./assets/models/textObj/lighthouseRiddle.obj"></a-asset-item>
-        <a-asset-item id="riddle-mtl" src="./assets/models/textObj/lighthouseRiddle.mtl"></a-asset-item>
-        <a-asset-item id="questionBlock-obj" src="./assets/models/questionBlock.2.obj"></a-asset-item>
-        <a-asset-item id="questionBlock-mtl" src="./assets/models/questionBlock.2.mtl"></a-asset-item>
         <!--Checkpoints-->
         <a-entity geometry="cylander" checkpoint="offset: 0 1.6 0" radius="0.8" height="0.06" color="#A6447D"></a-entity>
       </a-assets>
@@ -85,31 +80,42 @@
         <a-image id="openBridgeText"        src="#openBridge"   visible="false"> </a-image>
         <a-image id="skullPlaneTextLoader"  src="#skullPlane"   visible="false"> </a-image>
         <a-image id="fourBoxSignTextLoader" src="#fourBoxSign"  visible="false"> </a-image>
+        <a-image id="exitDoorText"          src="#exitDoor"     visible="false"> </a-image>
+        <a-image id="endText"               src="#end"          visible="false"> </a-image>
+        <a-image id="timeToLeaveText"       src="#timeToLeave"          visible="false"> </a-image>
+
+
 
 
        <!-- Models added to scene-->
        <a-entity static-body id="testBox"  obj-model="obj: #lighthouse-obj; mtl: #lighthouse-mtl" position="-0.33 0.5 -43.37" ></a-entity>
-       <a-entity static-body id="signPost" visible="false" obj-model="obj: #sign-obj; mtl: #sign-mtl" rotation="90 43 90" scale="0.3 0.3 0.3" position="3.46 0.96 -1.95" ></a-entity>
 
        <!-- Camera/Player -->
        <a-entity camera="userHeight: 1.6" universal-controls=" movementControls: checkpoint, keyboard; movementEnabled: true"
                 checkpoint-controls="mode: animate; animateSpeed:4.5"
                 kinematic-body>
                 <!-- CURSOR -->
-                <a-entity id="cursor" cursor position="0 0 -1" geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.02;" material="color: #CCC; shader: flat;"></a-entity>
+                <a-entity id="cursor" cursor position="0 0 -1" geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.02;" material="color: #CCC; shader: flat;">
+                </a-entity>
+                <!--Countdown Test -->
+                <a-image id="count-3-text"         src="#count-3"    visible="false" scale="0.6 0.4 0.4" position="0 1 -2"> </a-image>
+                <a-image id="count-2-text"         src="#count-2"    visible="false" scale="0.6 0.4 0.4" position="0 1 -2"> </a-image>
+                <a-image id="count-1-text"         src="#count-1"    visible="false" scale="0.6 0.4 0.4" position="0 1 -2"> </a-image>
+                <a-image id="ratsText"             src="#rats"       visible="false" scale="0.9 0.5 0.5" position="0 1 -2"> </a-image>
+
       </a-entity>
 
       <!-- Ocean -->
-      <a-ocean  width="50" depth="50" density="40"></a-ocean>
-      <a-ocean  width="50" position=" 0 0 -40.51" depth="50" density="40"></a-ocean>
-      <a-ocean  width="50" position=" 0 0 -88" depth="50" density="40"></a-ocean>
-      <a-plane static-body color="#445878" rotation="-90 0 0" position="0 -0.31 -50.00" height="150" width="50"></a-plane>
+      <a-ocean  id="ocean-1" width="50" depth="50" density="40"></a-ocean>
+      <a-ocean  id="ocean-2" width="50" position=" 0 0 -40.51" depth="50" density="40"></a-ocean>
+      <a-ocean  id="ocean-3" width="50" position=" 0 0 -88" depth="50" density="40"></a-ocean>
+      <a-plane  id="ocean-4" static-body color="#445878" rotation="-90 0 0" position="0 -0.31 -50.00" height="150" width="50"></a-plane>
 
       <!-- StartPoint -->
-      <a-cylinder static-body sound="autoplay: true; volume: 0.3; loop:true; src: #seaside; poolSize: 2" radius="5" height="0.75" depth="2" color="#39BB82" position="0 0.3 0.08"></a-cylinder>
+      <a-cylinder id="startPoint" static-body sound="autoplay: true; volume: 0.3; loop:true; src: #seaside; poolSize: 2" radius="5" height="0.75" depth="2" color="#39BB82" position="0 0.3 0.08"></a-cylinder>
 
       <!--main island -->
-      <a-cylinder static-body radius="12" height="0.75" depth="2" color="#92CDCF" position="0 0.40 -46"></a-cylinder>
+      <a-cylinder id="mainIsland" static-body radius="12" height="0.75" depth="2" color="#92CDCF" position="0 0.40 -46"></a-cylinder>
 
       <!--walkway-->
       <a-plane id="bridge" visible="false" static-body color="#445878" rotation="-90 0.59 0" position="0 0.5 -9.5" height="10" width="2"></a-plane>
@@ -122,9 +128,9 @@
          <!--0--><a-cylinder class="firstBridge" checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-0.89 0.65 -1.02" color="#FFF" visible="false"></a-cylinder>
          <!--1--><a-cylinder class="firstBridge" checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-0.91 0.65 -5.00" color="#FFF" visible="false"></a-cylinder>
          <!--2--><a-cylinder class="firstBridge" checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-1.02 0.5 -14.5" color="#FFF" visible="false"></a-cylinder>
-         <!--3--><a-cylinder checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-1.05 0.5 -28.5" color="#FFF" visible="false"></a-cylinder>
-         <!--4--><a-cylinder checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-1.01 0.79 -36.59" color="#FFF"visible="false"></a-cylinder>
-         <!--5--><a-cylinder checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-8.67 0.79 -40.23" color="#FFF"visible="false"></a-cylinder>
+         <!--3--><a-cylinder class="secondBridge"checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-1.05 0.59 -26.5" color="#FFF" visible="false"></a-cylinder>
+         <!--4--><a-cylinder class="secondBridge"checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-1.01 0.79 -36.59" color="#FFF"visible="false"></a-cylinder>
+         <!--5--><a-cylinder class="secondBridge"checkpoint="offset: 0 1.6 0" radius="1" height="0.06" position="-8.67 0.79 -40.23" color="#FFF"visible="false"></a-cylinder>
        </a-entity>
     </a-scene>
   </div>
