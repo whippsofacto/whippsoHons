@@ -86,19 +86,19 @@ $("#questionBlock").append($(document.createElement("a-ring"))
 
 endOfAllThings = function(){
   $("#testBox").attr({
-    animation__scaleDown:"property: scale; dir: normal; dur: 10000; easing: easeInSine; loop: false; to: 0 0 0",
+    animation__scaleDown:"property: scale; dir: normal; dur: 30000; easing: easeInSine; loop: false; to: 0 0 0",
   })
   $("#ocean-1").attr({
-    animation__scaleDown:"property: scale; dir: normal; dur: 15000; easing: easeInSine; loop: false; to: 0 0 0",
+    animation__scaleDown:"property: scale; dir: normal; dur: 29000; easing: easeInSine; loop: false; to: 0 0 0",
   })
   $("#ocean-2").attr({
     animation__scaleDown:"property: scale; dir: normal; dur: 24000; easing: easeInSine; loop: false; to: 0 0 0",
   })
   $("#ocean-3").attr({
-    animation__scaleDown:"property: scale; dir: normal; dur: 9850; easing: easeInSine; loop: false; to: 0 0 0",
+    animation__scaleDown:"property: scale; dir: normal; dur: 19850; easing: easeInSine; loop: false; to: 0 0 0",
   })
   $("#ocean-4").attr({
-    animation__scaleDown:"property: scale; dir: normal; dur: 7000; easing: easeInSine; loop: false; to: 0 0 0",
+    animation__scaleDown:"property: scale; dir: normal; dur: 17000; easing: easeInSine; loop: false; to: 0 0 0",
   })
   $("#startPoint").attr({
     animation__scaleDown:"property: scale; dir: normal; dur: 8000; easing: easeInSine; loop: false; to: 0 0 0",
@@ -107,7 +107,7 @@ endOfAllThings = function(){
     animation__scaleDown:"property: scale; dir: normal; dur: 13000; easing: easeInSine; loop: false; to: 0 0 0",
   })
   $("#bridge").attr({
-    animation__scaleDown:"property: scale; dir: normal; dur: 9000; easing: easeInSine; loop: false; to: 0 0 0",
+    animation__scaleDown:"property: scale; dir: normal; dur: 19000; easing: easeInSine; loop: false; to: 0 0 0",
   })
   $("#exitDoorText").attr({
     animation__scaleDown:"property: scale; dir: normal; dur: 10000; easing: easeInSine; loop: false; to: 0 0 0",
@@ -122,6 +122,7 @@ endOfAllThings = function(){
   $("#cursor").attr({
     sound:"autoplay: true; volume: 1.25; loop:true; src: #loopEnd; poolSize: 2"
   })
+  var timeoutVar = setTimeout(function(){ring();},40000);
   sky.removeAttr("animation__top");
   sky.removeAttr("animation__bottom");
   sky.attr({
@@ -134,6 +135,8 @@ endOfAllThings = function(){
 
   $("#questionBlock").off();
   $("#questionBlock").click(function(){
+    $("#circle").remove();
+    clearTimeout(timeoutVar);
     $("#timeToLeaveText")
     .attr({
       visible: "true",
@@ -163,6 +166,7 @@ endOfAllThings = function(){
   setTimeout(function(){
   $("#timeToLeaveText").remove();
   $('#questionBlockSound').remove();
+  $("#cursor").removeAttr("sound");
       scene.append($(document.createElement("a-image"))
         .attr({
           id:  "timeToLeaveText",
